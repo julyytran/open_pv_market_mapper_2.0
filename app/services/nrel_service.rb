@@ -1,4 +1,6 @@
 class NRELService
+  include StatesHelper
+
   attr_reader :connection
 
   def initialize

@@ -4,4 +4,6 @@ class State < ActiveRecord::Base
   validates :avg_cost_pw, presence: true
   validates :total_capacity, presence: true
   validates :total_installs, presence: true
+
+  has_one :geometry
 end
