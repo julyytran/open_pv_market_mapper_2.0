@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160420002919) do
   enable_extension "plpgsql"
 
   create_table "states", force: :cascade do |t|
+    t.string   "name"
     t.string   "abbreviation"
     t.string   "avg_cost_pw"
     t.string   "total_capacity"
