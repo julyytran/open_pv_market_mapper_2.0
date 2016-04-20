@@ -6,7 +6,7 @@ class NRELService
   end
 
   def get_state_data
-    states.each do |state|
+    states.map do |state|
       result = parse("/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{state}")
       avg_cost_pw = result["result"]["avg_cost_pw"]
       total_capacity = result["result"]["total_capacity"]
