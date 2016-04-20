@@ -6,27 +6,28 @@ class NRELService
   end
 
   def get_state_data
-    states.map do |state|
-      result = parse("/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{state}")
-      avg_cost_pw = result["result"]["avg_cost_pw"]
-      total_capacity = result["result"]["total_capacity"]
-      total_installs = result["result"]["total_installs"]
+    state_abbreviations.map do |abbr|
+      response = parse("/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{abbr}")
 
-      State.create(abbreviation: state, avg_cost_pw: avg_cost_pw,
+      avg_cost_pw = response["result"]["avg_cost_pw"]
+      total_capacity = response["result"]["total_capacity"]
+      total_installs = response["result"]["total_installs"]
+
+      State.create(name: state_names["#{abbr}"], abbreviation: abbr, avg_cost_pw: avg_cost_pw,
       total_capacity: total_capacity, total_installs: total_installs)
     end
   end
 
   def update_state_data
-    states.map do |state|
-      result = parse("/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{state}")
-      avg_cost_pw = result["result"]["avg_cost_pw"]
-      total_capacity = result["result"]["total_capacity"]
-      total_installs = result["result"]["total_installs"]
+    state_abbreviations.map do |abbr|
+      response = parse("/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{abbr}")
 
-      state = State.find_by(abbreviation: state)
-      state.update(abbreviation: state, avg_cost_pw: avg_cost_pw,
-      total_capacity: total_capacity, total_installs: total_installs)
+      avg_cost_pw = response["result"]["avg_cost_pw"]
+      total_capacity = response["result"]["total_capacity"]
+      total_installs = response["result"]["total_installs"]
+
+      state = State.find_by(abbreviation: abbr)
+      state.update(avg_cost_pw: avg_cost_pw, total_capacity: total_capacity, total_installs: total_installs)
     end
   end
 
@@ -36,11 +37,23 @@ class NRELService
     JSON.parse(@connection.get(path).body)
   end
 
-  def states
-    ["AK", "AL", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID",
-      "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
-      "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK",
-      "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
-      "WI", "WY"]
+  def state_abbreviations
+    state_names.keys
+  end
+
+  def state_names
+    {"AK" => "Alaska", "AL" => "Alabama", "AZ" => "Arizona", "AR" => "Arkansas",
+      "CA" => "California", "CO" => "Colorado", "CT" => "Connecticut", "DE" => "Delaware",
+      "FL" => "Florida", "GA" => "Georgia", "HI" => "Hawaii", "ID" => "Idaho",
+      "IL" => "Illinois", "IN" => "Indiana", "IA" => "Iowa", "KS" => "Kansas",
+      "KY" => "Kentucky", "LA" => "Louisiana", "ME" => "Maine", "MD" => "Maryland",
+      "MA" => "Massachusetts", "MI" => "Michigan", "MN" => "Minnesota", "MS" => "Mississippi",
+      "MO" => "Missouri", "MT" => "Montana", "NE" => "Nebraska", "NV" => "Nevada",
+      "NH" => "New Hampshire", "NJ" => "New Jersey", "NM" => "New Mexico",
+      "NY" => "New York", "NC" => "North Carolina", "ND" => "North Dakota", "OH" => "Ohio",
+      "OK" => "Oklahoma", "OR" => "Oregon", "PA" => "Pennsylvania", "RI" => "Rhode Island",
+      "SC" => "South Carolina", "SD" => "South Dakota", "TN" => "Tennessee", "TX" => "Texas",
+      "UT" => "Utah", "VT" => "Vermont", "VA" => "Virginia", "WA" => "Washington",
+      "WV" => "West Virginia", "WI" => "Wisconsin", "WY" => "Wyoming"}
   end
 end
