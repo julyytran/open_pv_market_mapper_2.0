@@ -19,6 +19,11 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'shoulda-matchers', '~> 3.1'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 group :development do
