@@ -6,4 +6,6 @@ Rails.application.routes.draw do
       resources :states, only: [:index]
     end
   end
+
+  resources :updates, only: [:index]
 end

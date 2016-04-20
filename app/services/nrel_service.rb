@@ -11,7 +11,21 @@ class NRELService
       avg_cost_pw = result["result"]["avg_cost_pw"]
       total_capacity = result["result"]["total_capacity"]
       total_installs = result["result"]["total_installs"]
-      latest_state = State.create(abbreviation: state, avg_cost_pw: avg_cost_pw,
+
+      State.create(abbreviation: state, avg_cost_pw: avg_cost_pw,
+      total_capacity: total_capacity, total_installs: total_installs)
+    end
+  end
+
+  def update_state_data
+    states.map do |state|
+      result = parse("/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{state}")
+      avg_cost_pw = result["result"]["avg_cost_pw"]
+      total_capacity = result["result"]["total_capacity"]
+      total_installs = result["result"]["total_installs"]
+
+      state = State.find_by(abbreviation: state)
+      state.update(abbreviation: state, avg_cost_pw: avg_cost_pw,
       total_capacity: total_capacity, total_installs: total_installs)
     end
   end
