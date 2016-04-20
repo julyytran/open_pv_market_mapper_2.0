@@ -18,6 +18,6 @@ class State < ActiveRecord::Base
         "total_capacity" => "#{self.total_capacity}"
       },
       "geometry" => {"type" => "#{self.geometry.shape}",
-      "coordinates" => JSON.parse(self.geometry.coordinates)}}.to_json
+      "coordinates" => JSON.parse(self.geometry.coordinates)}}
     end
 end
