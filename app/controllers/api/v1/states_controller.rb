@@ -4,7 +4,7 @@ module Api
       respond_to :json
 
       def index
-        respond_with State.all
+        render json: State.all, callback: "renderStates"
       end
     end
   end
