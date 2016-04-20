@@ -17,12 +17,10 @@ class NRELService
 
       State.create(name: state_names["#{abbr}"], abbreviation: abbr, avg_cost_pw: avg_cost_pw,
       total_capacity: total_capacity, total_installs: total_installs)
-      puts "Created #{abbr}"
 
       state = State.find_by(abbreviation: abbr)
       Geometry.create(state_id: state.id, shape: state_shapes["#{abbr}"],
       coordinates: state_coordinates["#{abbr}"] )
-      puts "created geometry for #{abbr}"
     end
   end
 
