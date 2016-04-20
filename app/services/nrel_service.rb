@@ -11,7 +11,7 @@ class NRELService
       avg_cost_pw = result["result"]["avg_cost_pw"]
       total_capacity = result["result"]["total_capacity"]
       total_installs = result["result"]["total_installs"]
-      State.create(abbreviation: state, avg_cost_pw: avg_cost_pw,
+      latest_state = State.create(abbreviation: state, avg_cost_pw: avg_cost_pw,
       total_capacity: total_capacity, total_installs: total_installs)
     end
   end
