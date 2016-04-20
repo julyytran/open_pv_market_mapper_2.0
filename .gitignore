@@ -17,3 +17,6 @@
 
 #Ignore SimpleCov coverage
 /coverage
+
+#Ignore VCR cassettes
+/spec/cassettes
