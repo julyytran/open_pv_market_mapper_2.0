@@ -3,7 +3,8 @@ class CreateGeometries < ActiveRecord::Migration
     create_table :geometries do |t|
       t.references :state
       t.string :shape
-      t.integer :coordinates, array:true, default: []
+      t.string :coordinates
+      # , array:true, default: []
 
       t.timestamps null: false
     end

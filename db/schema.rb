@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20160420203336) do
   create_table "geometries", force: :cascade do |t|
     t.integer  "state_id"
     t.string   "shape"
-    t.integer  "coordinates", default: [],              array: true
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "coordinates"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "states", force: :cascade do |t|
