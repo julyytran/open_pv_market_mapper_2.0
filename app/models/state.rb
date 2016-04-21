@@ -19,5 +19,5 @@ class State < ActiveRecord::Base
       },
       "geometry" => {"type" => "#{self.geometry.shape}",
       "coordinates" => JSON.parse(self.geometry.coordinates)}}
-    end
+  end
 end
