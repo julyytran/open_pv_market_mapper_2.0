@@ -1,15 +1,13 @@
-$(document).ready(function(){
-  debugger
-  console.log(statesData);
+var statesData = {};
 
+$(document).ready(function(){
+  getData();
 });
 
-var statesData = function(){
-  $.getJSON( "https:http://localhost:3000/api/v1/states");
-};
+var getData = function() {
+  $.getJSON("http://localhost:3000/api/v1/states", function(data) {
+    statesData = data;
+  });
+}
 
-// function renderStates(data) {
-//   debugger
-//   console.log(data);
 //   // mapbox.geoJson(data).addTo(map)
-// }
