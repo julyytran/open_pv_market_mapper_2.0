@@ -6,8 +6,8 @@ describe NRELService do
 
   it 'creates states with accurate data' do
     VCR.use_cassette 'nrel_service#get_state_data' do
-      pending
-      state = @service.get_state_data.first
+      @service.get_state_data
+      state = State.find_by(abbreviation: "AK")
 
       expect(state.abbreviation).to eq "AK"
       expect(state.avg_cost_pw).to eq "6.466"
