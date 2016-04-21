@@ -9,10 +9,22 @@ var getData = function() {
 }
 
 function renderMap(statesData){
-  L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
+  // mapboxgl.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
+  // L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
+    //
+    var map = L.mapbox.map('map', 'https://api.mapbox.com/styles/v1/julyytran/cinaum0rm0083abkr60axmjsc.html?title=true&access_token=pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g#3/34.562091393240124/-104.82611219578008/0')
+      .setView([37.8, -96], 4.5);
 
-    var map = L.mapbox.map('map', 'mapbox.streets')
-      .setView([37.8, -96], 4);
+    // var map = L.mapbox.map('map', 'mapbox.streets')
+    //   .setView([37.8, -96], 4);
+
+    // var map = new mapboxgl.Map({
+    //   container: 'map',
+    //   center: [37.8, -96],
+    //   zoom: 4,
+    //   style: 'mapbox://styles/julyytran/cinaum0rm0083abkr60axmjsc',
+    //   // hash: true
+    // });
 
     var popup = new L.Popup({ autoPan: false });
 
