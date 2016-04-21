@@ -4,4 +4,20 @@ class State < ActiveRecord::Base
   validates :avg_cost_pw, presence: true
   validates :total_capacity, presence: true
   validates :total_installs, presence: true
+
+  has_one :geometry
+
+  def build_geojson
+    {"type" => "Feature",
+      "id" => "#{self.id}",
+      "properties" =>
+      {
+        "name" => "#{self.name}",
+        "avg_cost_pw" => "#{self.avg_cost_pw}",
+        "total_installs" => "#{self.total_installs}",
+        "total_capacity" => "#{self.total_capacity}"
+      },
+      "geometry" => {"type" => "#{self.geometry.shape}",
+      "coordinates" => JSON.parse(self.geometry.coordinates)}}
+  end
 end

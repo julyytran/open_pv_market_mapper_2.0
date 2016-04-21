@@ -1,4 +1,6 @@
 class NRELService
+  include StatesHelper
+
   attr_reader :connection
 
   def initialize
@@ -15,6 +17,10 @@ class NRELService
 
       State.create(name: state_names["#{abbr}"], abbreviation: abbr, avg_cost_pw: avg_cost_pw,
       total_capacity: total_capacity, total_installs: total_installs)
+
+      state = State.find_by(abbreviation: abbr)
+      Geometry.create(state_id: state.id, shape: state_shapes["#{abbr}"],
+      coordinates: state_coordinates["#{abbr}"] )
     end
   end
 
@@ -35,25 +41,5 @@ class NRELService
 
   def parse(path)
     JSON.parse(@connection.get(path).body)
-  end
-
-  def state_abbreviations
-    state_names.keys
-  end
-
-  def state_names
-    {"AK" => "Alaska", "AL" => "Alabama", "AZ" => "Arizona", "AR" => "Arkansas",
-      "CA" => "California", "CO" => "Colorado", "CT" => "Connecticut", "DE" => "Delaware",
-      "FL" => "Florida", "GA" => "Georgia", "HI" => "Hawaii", "ID" => "Idaho",
-      "IL" => "Illinois", "IN" => "Indiana", "IA" => "Iowa", "KS" => "Kansas",
-      "KY" => "Kentucky", "LA" => "Louisiana", "ME" => "Maine", "MD" => "Maryland",
-      "MA" => "Massachusetts", "MI" => "Michigan", "MN" => "Minnesota", "MS" => "Mississippi",
-      "MO" => "Missouri", "MT" => "Montana", "NE" => "Nebraska", "NV" => "Nevada",
-      "NH" => "New Hampshire", "NJ" => "New Jersey", "NM" => "New Mexico",
-      "NY" => "New York", "NC" => "North Carolina", "ND" => "North Dakota", "OH" => "Ohio",
-      "OK" => "Oklahoma", "OR" => "Oregon", "PA" => "Pennsylvania", "RI" => "Rhode Island",
-      "SC" => "South Carolina", "SD" => "South Dakota", "TN" => "Tennessee", "TX" => "Texas",
-      "UT" => "Utah", "VT" => "Vermont", "VA" => "Virginia", "WA" => "Washington",
-      "WV" => "West Virginia", "WI" => "Wisconsin", "WY" => "Wyoming"}
   end
 end

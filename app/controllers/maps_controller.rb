@@ -1,5 +1,4 @@
-class MapsController < ActionController::Base
+class MapsController < ApplicationController
   def index
-    render text: "Awesome maps coming soon!"
   end
 end

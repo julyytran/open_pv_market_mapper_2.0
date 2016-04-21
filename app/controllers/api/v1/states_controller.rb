@@ -4,7 +4,11 @@ module Api
       respond_to :json
 
       def index
-        respond_with State.all
+        @states_geojson = State.all.map do |state|
+          state.build_geojson
+        end
+
+        respond_with @states_geojson
       end
     end
   end
