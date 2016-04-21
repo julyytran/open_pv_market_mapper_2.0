@@ -19,7 +19,7 @@ RSpec.describe "get states index" do
 
     expect(state).to eq (
       {"type"=>"Feature",
-        "id"=>"3",
+        "id"=>"#{state["id"]}",
         "properties"=>{
             "name"=>"Julyarado",
             "avg_cost_pw"=>"100",
