@@ -1,4 +1,4 @@
-function addLayer(layer, name, zIndex) {
+function addLayer(layer, name, zIndex, map, layers) {
   layer.addTo(map)
   layer.setZIndex(zIndex);
 
