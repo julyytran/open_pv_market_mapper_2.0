@@ -1,6 +1,5 @@
 $(document).ready(function(){
   getData();
-  // renderMap();
 });
 
 var getData = function() {
@@ -9,7 +8,6 @@ var getData = function() {
   });
 }
 
-// function renderMap(){
 function renderMap(statesData){
 
   L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
@@ -17,71 +15,115 @@ function renderMap(statesData){
 
   var layers = document.getElementById('menu-ui');
 
-  var statesLayer = L.geoJson(statesData,  {
-      style: getStyle,
+  var statesInstalls = L.geoJson(statesData,  {
+      style: getInstalls,
       onEachFeature: onEachFeature
   })
 
-  addLayer(L.mapbox.styleLayer('mapbox://styles/julyytran/cinay583z0019ackpurcnqsvo'), 'Base Map', 1);
+  var statesCapacities = L.geoJson(statesData,  {
+      style: getCapacities,
+      onEachFeature: onEachFeature
+  })
+
+  var statesCosts = L.geoJson(statesData,  {
+      style: getCosts,
+      onEachFeature: onEachFeature
+  })
+
+  var baseMap = L.mapbox.styleLayer('mapbox://styles/julyytran/cinay583z0019ackpurcnqsvo');
+
+  addLayer(baseMap, 'Base Map', 1);
   addLayer(L.mapbox.styleLayer('mapbox://styles/julyytran/cinaum0rm0083abkr60axmjsc'), 'State Labels', 2);
-  addLayer(statesLayer, 'Total Installs', 3)
+  addLayer(statesInstalls, 'Total Installs', 3)
+  addLayer(statesCapacities, 'Total Capacity', 4)
+  addLayer(statesCosts, 'Avg Cost $/W', 5)
 
-    function addLayer(layer, name, zIndex) {
-      layer.addTo(map)
-      layer.setZIndex(zIndex);
+// ------------toggle_layers.js-------
+  function addLayer(layer, name, zIndex) {
+    layer.addTo(map)
+    layer.setZIndex(zIndex);
 
-      var link = document.createElement('a');
-          link.href = '#';
-          link.className = 'active';
-          link.innerHTML = name;
+    var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.innerHTML = name;
 
-      link.onclick = function(e) {
-          e.preventDefault();
-          e.stopPropagation();
+    link.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-          if (map.hasLayer(layer)) {
-              map.removeLayer(layer);
-              this.className = '';
-          } else {
-              map.addLayer(layer);
-              this.className = 'active';
-          }
-      };
+        if (map.hasLayer(layer)) {
+            map.removeLayer(layer);
+            this.className = '';
+        } else {
+            map.addLayer(layer);
+            this.className = 'active';
+        }
+    };
 
-      layers.appendChild(link);
+    layers.appendChild(link);
+}
+
+// -------------------------------------------------
+
+// ------------style_data.js----------------
+  function getInstalls(feature) {
+    return {
+      weight: 2,
+      opacity: 0.1,
+      color: 'black',
+      fillOpacity: 0.7,
+      fillColor: getColor(feature.properties.total_installs)
+    };
   }
 
-    var popup = new L.Popup({ autoPan: false });
+  function getCapacities(feature) {
+    return {
+      weight: 2,
+      opacity: 0.1,
+      color: 'black',
+      fillOpacity: 0.7,
+      fillColor: getColor(feature.properties.total_capacity)
+    };
+  }
 
-    function getStyle(feature) {
-        return {
-            weight: 2,
-            opacity: 0.1,
-            color: 'black',
-            fillOpacity: 0.7,
-            fillColor: getColor(feature.properties.total_installs)
-        };
-    }
+  function getCosts(feature) {
+    return {
+      weight: 2,
+      opacity: 0.1,
+      color: 'black',
+      fillOpacity: 0.7,
+      fillColor: getColor(feature.properties.avg_cost_pw)
+    };
+  }
 
-    function getColor(p) {
-        return p > 10000 ? '#005824' :
-            p > 5000  ? '#238b45' :
-            p > 2000  ? '#41ae76' :
-            p > 1000  ? '#66c2a4' :
-            p > 500   ? '#99d8c9' :
-            p > 200   ? '#ccece6' :
-            p > 100   ? '#e5f5f9' :
-            '#f7fcfd';
-    }
 
-    function onEachFeature(feature, layer) {
-        layer.on({
-            mousemove: mousemove,
-            mouseout: mouseout,
-            click: zoomToFeature
-        });
-    }
+// ---------style_map,js--------------------------
 
+  function getColor(p) {
+      return p > 10000 ? '#005824' :
+          p > 5000  ? '#238b45' :
+          p > 2000  ? '#41ae76' :
+          p > 1000  ? '#66c2a4' :
+          p > 500   ? '#99d8c9' :
+          p > 200   ? '#ccece6' :
+          p > 100   ? '#e5f5f9' :
+          '#f7fcfd';
+  }
+
+  function onEachFeature(feature, layer) {
+      layer.on({
+          mousemove: mousemove,
+          mouseout: mouseout,
+          click: zoomToFeature
+      });
+  }
+
+  var popup = new L.Popup({ autoPan: false });
+
+// -----------------------------------------------------
+
+// ----------------mouseover.js-----------------
     var closeTooltip;
 
    function mousemove(e) {
@@ -106,16 +148,21 @@ function renderMap(statesData){
    }
 
    function mouseout(e) {
-       statesLayer.resetStyle(e.target);
+    //  debugger
+       statesInstalls.resetStyle(e.target);
        closeTooltip = window.setTimeout(function() {
            map.closePopup();
        }, 100);
    }
+// --------------------------------------------
 
+// -----------------zoom.js--------------------
    function zoomToFeature(e) {
        map.fitBounds(e.target.getBounds());
    }
+// ------------------------------------
 
+// ----------------------legend.js------------------
    map.legendControl.addLegend(getLegendHTML());
 
    function getLegendHTML() {
