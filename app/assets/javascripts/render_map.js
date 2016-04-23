@@ -9,16 +9,19 @@ function renderMap(statesData){
   var map = L.mapbox.map('map').setView([38.97416, -95.23252], 4);
 
   var hues = [
-    '#eff3ff',
-    '#bdd7e7',
-    '#6baed6',
-    '#3182bd',
-    '#08519c'];
+    '#f7fcf5',
+    '#e5f5e0',
+    '#c7e9c0',
+    '#a1d99b',
+    '#74c476',
+    '#41ab5d',
+    '#238b45',
+    '#005a32'];
 
   var variables = [
-    'avg_cost_pw',
-    'total_installs',
-    'total_capacity'];
+    'Average Cost $/W',
+    'Total Installs',
+    'Total Capacity'];
 
   var ranges = {};
 
@@ -74,10 +77,15 @@ function renderMap(statesData){
 
   function setVariable(name) {
       var scale = ranges[name];
+      // debugger
       usLayer.eachLayer(function(layer) {
           // Decide the color for each state by finding its
           // place between min & max, and choosing a particular
           // color as index.
+          // var division = Math.floor(
+          //     (layer.feature.properties[name]) /
+          //     (scale.max) * (hues.length - 1));
+          //     console.log(division)
           var division = Math.floor(
               (hues.length - 1) *
               ((layer.feature.properties[name] - scale.min) /
@@ -88,7 +96,8 @@ function renderMap(statesData){
               weight: 0.5
           });
       });
-  }}
+  }
+}
 
 
 // //   function onEachFeature(feature, layer) {
