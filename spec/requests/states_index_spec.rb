@@ -22,9 +22,9 @@ RSpec.describe "get states index" do
         "id"=>"#{state["id"]}",
         "properties"=>{
             "name"=>"Julyarado",
-            "avg_cost_pw"=>"100",
-            "total_installs"=>"300",
-            "total_capacity"=>"200"
+            "Average Cost ($/W)"=>"100",
+            "Total Installs"=>"300",
+            "Total Capacity"=>"200"
         },
           "geometry"=>{"type"=>"Polygon",
           "coordinates"=>[[[10]]]}}
