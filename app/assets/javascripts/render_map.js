@@ -43,6 +43,8 @@ function renderMap(statesData){
       });
   }
 
+  map.legendControl.addLegend(getLegendHTML());
+
   var popup = new L.Popup({ autoPan: false });
 
 // ----------------mouseover.js-----------------
@@ -53,7 +55,7 @@ function renderMap(statesData){
 
        popup.setLatLng(e.latlng);
        popup.setContent('<div class="marker-title">' + layer.feature.properties.name + '</div>' +
-           layer.feature.properties.total_installs + ' total installs');
+           parseInt(layer.feature.properties.total_installs).toLocaleString() + ' total installs');
 
        if (!popup._map) popup.openOn(map);
        window.clearTimeout(closeTooltip);
@@ -83,6 +85,5 @@ function renderMap(statesData){
    }
 // ------------------------------------
 
-   map.legendControl.addLegend(getLegendHTML());
 
 }
