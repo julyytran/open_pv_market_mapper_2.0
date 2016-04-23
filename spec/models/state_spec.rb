@@ -15,7 +15,7 @@ RSpec.describe State, type: :model do
     Geometry.create(state_id: state1.id, shape: "Polygon", coordinates: "[[[10]]]" )
 
     expect(state1.build_geojson).to eq(
-     {"type"=>"Feature", "id"=>"#{state1.id}", "properties"=>{"name"=>"Julyarado", "avg_cost_pw"=>"100", "total_installs"=>"300", "total_capacity"=>"200"}, "geometry"=>{"type"=>"Polygon", "coordinates"=>[[[10]]]}}
+     {"type"=>"Feature", "id"=>"#{state1.id}", "properties"=>{"name"=>"Julyarado", "Average Cost ($/W)"=>"100", "Total Installs"=>"300", "Total Capacity"=>"200"}, "geometry"=>{"type"=>"Polygon", "coordinates"=>[[[10]]]}}
     )
   end
 end
