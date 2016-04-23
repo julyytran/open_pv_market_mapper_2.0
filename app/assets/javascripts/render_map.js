@@ -114,11 +114,18 @@ function renderMap(statesData){
        var layer = e.target;
        var b = document.querySelector("#variables");
        var property = b.getAttribute( "data-name" );
-      //  debugger
+
+        if (property == "Average Cost ($/W)") {
+          var data = "$" + parseFloat(layer.feature.properties[property]).toFixed(2) + " per watt"
+      } else if (property == "Total Installs") {
+        var data = parseInt(layer.feature.properties[property]).toLocaleString() + " installations"
+      } else {
+        var data = parseFloat(layer.feature.properties[property]).toLocaleString() + " MW"
+      }
 
        popup.setLatLng(e.latlng);
        popup.setContent('<div class="marker-title">' + layer.feature.properties.name + '</div>' +
-           parseInt(layer.feature.properties[property]).toLocaleString() + " " + property );
+           data);
 
        if (!popup._map) popup.openOn(map);
        window.clearTimeout(closeTooltip);
