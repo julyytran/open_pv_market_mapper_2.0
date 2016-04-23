@@ -13,9 +13,9 @@ class State < ActiveRecord::Base
       "properties" =>
       {
         "name" => "#{self.name}",
-        "avg_cost_pw" => "#{self.avg_cost_pw}",
-        "total_installs" => "#{self.total_installs}",
-        "total_capacity" => "#{self.total_capacity}"
+        "Average Cost ($/W)" => "#{self.avg_cost_pw}",
+        "Total Installs" => "#{self.total_installs}",
+        "Total Capacity" => "#{self.total_capacity}"
       },
       "geometry" => {"type" => "#{self.geometry.shape}",
       "coordinates" => JSON.parse(self.geometry.coordinates)}}

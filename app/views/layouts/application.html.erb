@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>OpenPvMarketMapper</title>
+  <title>Open PV Market Mapper 2.0</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= csrf_meta_tags %>
 </head>
@@ -10,5 +10,8 @@
 <%= yield %>
 
 <%= javascript_include_tag 'application' %>
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+
 </body>
 </html>
