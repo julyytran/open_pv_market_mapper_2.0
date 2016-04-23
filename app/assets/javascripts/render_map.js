@@ -19,7 +19,7 @@ function renderMap(statesData){
     '#005a32'];
 
   var variables = [
-    'Average Cost $/W',
+    'Average Cost ($/W)',
     'Total Installs',
     'Total Capacity'];
 
@@ -77,11 +77,10 @@ function renderMap(statesData){
 
   function setVariable(name) {
       var scale = ranges[name];
-      // debugger
+      var b = document.querySelector("#variables");
+      b.setAttribute( "data-name", name );
+
       usLayer.eachLayer(function(layer) {
-          // Decide the color for each state by finding its
-          // place between min & max, and choosing a particular
-          // color as index.
           // var division = Math.floor(
           //     (layer.feature.properties[name]) /
           //     (scale.max) * (hues.length - 1));
@@ -95,60 +94,62 @@ function renderMap(statesData){
               fillOpacity: 0.8,
               weight: 0.5
           });
+          layer.on({
+                   mousemove: mousemove,
+                   mouseout: mouseout,
+                   click: zoomToFeature,
+                   dblclick: zoomToMap
+               });
       });
   }
-}
 
+  map.legendControl.addLegend(getLegendHTML());
 
-// //   function onEachFeature(feature, layer) {
-// //       layer.on({
-// //           mousemove: mousemove,
-// //           mouseout: mouseout,
-// //           click: zoomToFeature
-// //       });
-// //   }
-// //
-// //   map.legendControl.addLegend(getLegendHTML());
-// //
-// //   var popup = new L.Popup({ autoPan: false });
-// //
+  var popup = new L.Popup({ autoPan: false });
+
 // // // ----------------mouseover.js-----------------
-// //     var closeTooltip;
-// //
-// //    function mousemove(e) {
-// //        var layer = e.target;
-// //
-// //        popup.setLatLng(e.latlng);
-// //        popup.setContent('<div class="marker-title">' + layer.feature.properties.name + '</div>' +
-// //            parseInt(layer.feature.properties.total_installs).toLocaleString() + ' total installs');
-// //
-// //        if (!popup._map) popup.openOn(map);
-// //        window.clearTimeout(closeTooltip);
-// //
-// //        layer.setStyle({
-// //            weight: 3,
-// //            opacity: 0.3,
-// //            fillOpacity: 0.9
-// //        });
-// //
-// //        if (!L.Browser.ie && !L.Browser.opera) {
-// //            layer.bringToFront();
-// //        }
-// //    }
-// //
-// //    function mouseout(e) {
-// //        statesInstalls.resetStyle(e.target);
-// //        closeTooltip = window.setTimeout(function() {
-// //            map.closePopup();
-// //        }, 100);
-// //    }
-// // // --------------------------------------------
-// //
-// // // -----------------zoom.js--------------------
-// //    function zoomToFeature(e) {
-// //        map.fitBounds(e.target.getBounds());
-// //    }
-// // // ------------------------------------
-// //
-// //
-// }
+    var closeTooltip;
+
+   function mousemove(e) {
+       var layer = e.target;
+       var b = document.querySelector("#variables");
+       var property = b.getAttribute( "data-name" );
+      //  debugger
+
+       popup.setLatLng(e.latlng);
+       popup.setContent('<div class="marker-title">' + layer.feature.properties.name + '</div>' +
+           parseInt(layer.feature.properties[property]).toLocaleString() + " " + property );
+
+       if (!popup._map) popup.openOn(map);
+       window.clearTimeout(closeTooltip);
+
+      //  layer.setStyle({
+      //      weight: 3,
+      //      opacity: 0.3,
+      //      fillOpacity: 0.9
+      //  });
+
+       if (!L.Browser.ie && !L.Browser.opera) {
+           layer.bringToFront();
+       }
+   }
+
+   function mouseout(e) {
+     var layer = e.target;
+
+      //  layer.resetStyle();
+       closeTooltip = window.setTimeout(function() {
+           map.closePopup();
+       }, 100);
+   }
+// --------------------------------------------
+
+// -----------------zoom.js--------------------
+   function zoomToFeature(e) {
+       map.fitBounds(e.target.getBounds());
+   }
+
+   function zoomToMap(e) {
+     map.setView([38.97416, -95.23252], 4)
+   }
+}

@@ -13,7 +13,7 @@ class State < ActiveRecord::Base
       "properties" =>
       {
         "name" => "#{self.name}",
-        "Average Cost $/W" => "#{self.avg_cost_pw}",
+        "Average Cost ($/W)" => "#{self.avg_cost_pw}",
         "Total Installs" => "#{self.total_installs}",
         "Total Capacity" => "#{self.total_capacity}"
       },
