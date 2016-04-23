@@ -89,10 +89,13 @@ function renderMap(statesData){
               (hues.length - 1) *
               ((layer.feature.properties[name] - scale.min) /
               (scale.max - scale.min)));
+
+
           layer.setStyle({
               fillColor: hues[division],
               fillOpacity: 0.8,
-              weight: 0.5
+              weight: 0.5,
+              opacity: 0.5,
           });
           layer.on({
                    mousemove: mousemove,
@@ -130,11 +133,11 @@ function renderMap(statesData){
        if (!popup._map) popup.openOn(map);
        window.clearTimeout(closeTooltip);
 
-      //  layer.setStyle({
-      //      weight: 3,
-      //      opacity: 0.3,
-      //      fillOpacity: 0.9
-      //  });
+       layer.setStyle({
+           weight: 3,
+           opacity: 0.5,
+           fillOpacity: 0.9
+       });
 
        if (!L.Browser.ie && !L.Browser.opera) {
            layer.bringToFront();
@@ -144,7 +147,22 @@ function renderMap(statesData){
    function mouseout(e) {
      var layer = e.target;
 
-      //  layer.resetStyle();
+     var b = document.querySelector("#variables");
+     var property = b.getAttribute( "data-name" );
+     var scale = ranges[property];
+
+     var division = Math.floor(
+         (hues.length - 1) *
+         ((layer.feature.properties[property] - scale.min) /
+         (scale.max - scale.min)));
+
+     layer.setStyle({
+         fillColor: hues[division],
+         fillOpacity: 0.8,
+         weight: 0.5,
+         opacity: 0.5,
+     });
+
        closeTooltip = window.setTimeout(function() {
            map.closePopup();
        }, 100);
