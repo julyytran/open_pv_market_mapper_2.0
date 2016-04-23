@@ -1,12 +1,6 @@
 $(document).ready(function(){
-  getData();
+  renderMap();
 });
-
-var getData = function() {
-  $.getJSON("http://localhost:3000/api/v1/states", function(statesData) {
-    renderMap(statesData)
-  });
-}
 
 function renderMap(statesData){
 
@@ -14,76 +8,138 @@ function renderMap(statesData){
 
   var map = L.mapbox.map('map').setView([38.97416, -95.23252], 4);
 
-  var layers = document.getElementById('menu-ui');
+  var hues = [
+    '#eff3ff',
+    '#bdd7e7',
+    '#6baed6',
+    '#3182bd',
+    '#08519c'];
 
-  var statesInstalls = L.geoJson(statesData,  {
-      style: getInstalls,
-      onEachFeature: onEachFeature
-  })
+  var variables = [
+    'avg_cost_pw',
+    'total_installs',
+    'total_capacity'];
 
-  var statesCapacities = L.geoJson(statesData,  {
-      style: getCapacities,
-      onEachFeature: onEachFeature
-  })
+  var ranges = {};
 
-  var statesCosts = L.geoJson(statesData,  {
-      style: getCosts,
-      onEachFeature: onEachFeature
-  })
-
-  addLayer(statesInstalls, 'Total Installs', 1, map, layers);
-  addLayer(statesCapacities, 'Total Capacity', 2, map, layers);
-  addLayer(statesCosts, 'Avg Cost $/W', 3, map, layers);
-
-  function onEachFeature(feature, layer) {
-      layer.on({
-          mousemove: mousemove,
-          mouseout: mouseout,
-          click: zoomToFeature
+  var $select = $('<select></select>')
+      .appendTo($('#variables'))
+      .on('change', function() {
+          setVariable($(this).val());
       });
+  for (var i = 0; i < variables.length; i++) {
+      ranges[variables[i]] = { min: Infinity, max: -Infinity };
+      $('<option></option>')
+          .text(variables[i])
+          .attr('value', variables[i])
+          .appendTo($select);
   }
 
-  map.legendControl.addLegend(getLegendHTML());
+  var usLayer = L.mapbox.featureLayer()
+      .loadURL('https://www.mapbox.com/mapbox.js/assets/data/us.geojson')
+      .addTo(map)
+      .on('ready', loadData);
 
-  var popup = new L.Popup({ autoPan: false });
+  function loadData() {
+      $.getJSON('http://localhost:3000/api/v1/states')
+          .done(function(data) {
+              joinData(data, usLayer);
+          });
+  }
 
-// ----------------mouseover.js-----------------
-    var closeTooltip;
+  function joinData(data, layer) {
+      var usGeoJSON = usLayer.getGeoJSON(),
+          byState = {};
 
-   function mousemove(e) {
-       var layer = e.target;
+      for (var i = 0; i < usGeoJSON.features.length; i++) {
+          byState[usGeoJSON.features[i].properties.name] =
+              usGeoJSON.features[i];
+      }
 
-       popup.setLatLng(e.latlng);
-       popup.setContent('<div class="marker-title">' + layer.feature.properties.name + '</div>' +
-           parseInt(layer.feature.properties.total_installs).toLocaleString() + ' total installs');
+      for (i = 0; i < data.length; i++) {
+          byState[data[i].properties.name] = data[i];
+          for (var j = 0; j < variables.length; j++) {
+              var n = variables[j];
+              ranges[n].min = Math.min(parseFloat(data[i].properties[n]), ranges[n].min);
+              ranges[n].max = Math.max(parseFloat(data[i].properties[n]), ranges[n].max);
+          }
+      }
+      var newFeatures = [];
+      for (i in byState) {
+          newFeatures.push(byState[i]);
+      }
+      usLayer.setGeoJSON(newFeatures);
+      setVariable(variables[0]);
+  }
 
-       if (!popup._map) popup.openOn(map);
-       window.clearTimeout(closeTooltip);
-
-       layer.setStyle({
-           weight: 3,
-           opacity: 0.3,
-           fillOpacity: 0.9
-       });
-
-       if (!L.Browser.ie && !L.Browser.opera) {
-           layer.bringToFront();
-       }
-   }
-
-   function mouseout(e) {
-       statesInstalls.resetStyle(e.target);
-       closeTooltip = window.setTimeout(function() {
-           map.closePopup();
-       }, 100);
-   }
-// --------------------------------------------
-
-// -----------------zoom.js--------------------
-   function zoomToFeature(e) {
-       map.fitBounds(e.target.getBounds());
-   }
-// ------------------------------------
+  function setVariable(name) {
+      var scale = ranges[name];
+      usLayer.eachLayer(function(layer) {
+          // Decide the color for each state by finding its
+          // place between min & max, and choosing a particular
+          // color as index.
+          var division = Math.floor(
+              (hues.length - 1) *
+              ((layer.feature.properties[name] - scale.min) /
+              (scale.max - scale.min)));
+          layer.setStyle({
+              fillColor: hues[division],
+              fillOpacity: 0.8,
+              weight: 0.5
+          });
+      });
+  }}
 
 
-}
+// //   function onEachFeature(feature, layer) {
+// //       layer.on({
+// //           mousemove: mousemove,
+// //           mouseout: mouseout,
+// //           click: zoomToFeature
+// //       });
+// //   }
+// //
+// //   map.legendControl.addLegend(getLegendHTML());
+// //
+// //   var popup = new L.Popup({ autoPan: false });
+// //
+// // // ----------------mouseover.js-----------------
+// //     var closeTooltip;
+// //
+// //    function mousemove(e) {
+// //        var layer = e.target;
+// //
+// //        popup.setLatLng(e.latlng);
+// //        popup.setContent('<div class="marker-title">' + layer.feature.properties.name + '</div>' +
+// //            parseInt(layer.feature.properties.total_installs).toLocaleString() + ' total installs');
+// //
+// //        if (!popup._map) popup.openOn(map);
+// //        window.clearTimeout(closeTooltip);
+// //
+// //        layer.setStyle({
+// //            weight: 3,
+// //            opacity: 0.3,
+// //            fillOpacity: 0.9
+// //        });
+// //
+// //        if (!L.Browser.ie && !L.Browser.opera) {
+// //            layer.bringToFront();
+// //        }
+// //    }
+// //
+// //    function mouseout(e) {
+// //        statesInstalls.resetStyle(e.target);
+// //        closeTooltip = window.setTimeout(function() {
+// //            map.closePopup();
+// //        }, 100);
+// //    }
+// // // --------------------------------------------
+// //
+// // // -----------------zoom.js--------------------
+// //    function zoomToFeature(e) {
+// //        map.fitBounds(e.target.getBounds());
+// //    }
+// // // ------------------------------------
+// //
+// //
+// }
