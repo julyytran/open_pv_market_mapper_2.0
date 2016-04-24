@@ -9,8 +9,14 @@
 .navbar {max-height: 28px !important;}
 
 .has-feedback .form-control-feedback {
-    top: 0;
-    right: 0;
+    position: absolute;
+    top: -3px !important;
+    right: -15px;
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
 }
 
 .navbar .brand {
