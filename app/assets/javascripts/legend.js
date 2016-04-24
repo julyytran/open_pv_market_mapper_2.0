@@ -52,7 +52,3 @@ function getColor(p, property) {
   }
  }
 }
-
-// function LegendHTML({
-//
-// })

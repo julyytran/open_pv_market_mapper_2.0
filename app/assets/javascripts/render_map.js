@@ -84,10 +84,6 @@ function renderMap(statesData){
     b.setAttribute( "data-name", name );
 
     usLayer.eachLayer(function(layer) {
-        // var division = Math.floor(
-        //     (layer.feature.properties[name]) /
-        //     (scale.max) * (hues.length - 1));
-        //     console.log(division)
       var division = Math.floor(
         (hues.length - 1) *
         ((layer.feature.properties[name] - scale.min) /
@@ -108,7 +104,6 @@ function renderMap(statesData){
       });
     });
 
-    // map.legendControl.removeLegend(LegendHTML());
     map.legendControl.addLegend(getLegendHTML());
   }
 
