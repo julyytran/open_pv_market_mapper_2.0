@@ -107,9 +107,8 @@ function renderMap(statesData){
         dblclick: zoomToMap
       });
     });
+    map.legendControl.addLegend(getLegendHTML());
   }
-
-  // map.legendControl.addLegend(getLegendHTML());
 
 // ----------------mouseover.js-----------------
   var popup = new L.Popup({ autoPan: false });
