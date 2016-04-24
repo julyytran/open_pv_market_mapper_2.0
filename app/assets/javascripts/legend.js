@@ -3,11 +3,11 @@ function getLegendHTML() {
   var property = b.getAttribute( "data-name" );
 
   if (property == "Average Cost ($/W)") {
-    var grades = [6.00, 7.00, 8.00, 9.00, 10.00],
+    var grades = [0, 6.00, 7.00, 8.00, 9.00, 10.00],
     labels = [],
     from, to;
 } else if (property == "Total Installs") {
-    var grades = [100, 500, 1000, 3000, 10000],
+    var grades = [0, 100, 500, 1000, 3000, 10000],
     labels = [],
     from, to;
 } else {
@@ -26,29 +26,29 @@ function getLegendHTML() {
   }
 
   return '<span><b>' + property + '</b></span><ul>' + labels.join('') + '</ul>';
+}
 
 function getColor(p, property) {
   if (property == "Total Installs") {
      return p > 10000 ? '#006d2c' :
          p > 3000  ? '#31a354' :
          p > 1000  ? '#74c476' :
-         p > 500  ? '#bae4b3' :
-         p > 100   ? '#edf8e9' :
-         '#ffffe5';
+         p > 500  ? '#a1d99b' :
+         p > 100   ? '#c7e9c0' :
+         '#edf8e9';
   } else if (property == "Average Cost ($/W)") {
     return p > 10 ? '#006d2c' :
         p > 9  ? '#31a354' :
         p > 8  ? '#74c476' :
-        p > 7  ? '#bae4b3' :
-        p > 6   ? '#edf8e9' :
-        '#ffffe5';
+        p > 7  ? '#a1d99b' :
+        p > 6   ? '#c7e9c0' :
+        '#edf8e9';
   } else {
     return p > 300 ? '#006d2c' :
         p > 100  ? '#31a354' :
         p > 25  ? '#74c476' :
-        p > 5  ? '#bae4b3' :
-        p > 0   ? '#edf8e9' :
-        '#ffffe5';
+        p > 5  ? '#a1d99b' :
+        p > 0   ? '#c7e9c0' :
+        '#edf8e9';
   }
- }
 }

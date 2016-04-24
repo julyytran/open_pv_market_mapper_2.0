@@ -8,22 +8,10 @@ function renderMap(statesData){
 
   var map = L.mapbox.map('map').setView([38.97416, -95.23252], 4);
 
-  var hues = [
-    '#f7fcf5',
-    '#e5f5e0',
-    '#c7e9c0',
-    '#a1d99b',
-    '#74c476',
-    '#41ab5d',
-    '#238b45',
-    '#005a32'];
-
   var variables = [
     'Average Cost ($/W)',
     'Total Installs',
     'Total Capacity (MW)'];
-
-  var ranges = {};
 
   var $select = $('<select></select>')
     .appendTo($('#variables'))
@@ -31,13 +19,11 @@ function renderMap(statesData){
       setVariable($(this).val());
     });
 
-  for (var i = 0; i < variables.length; i++) {
-    ranges[variables[i]] = { min: Infinity, max: -Infinity };
+  for (var i = 0; i < variables.length; i++)
     $('<option></option>')
       .text(variables[i])
       .attr('value', variables[i])
       .appendTo($select);
-  }
 
   var usLayer = L.mapbox.featureLayer()
       .loadURL('https://www.mapbox.com/mapbox.js/assets/data/us.geojson')
@@ -62,11 +48,6 @@ function renderMap(statesData){
 
     for (i = 0; i < data.length; i++) {
       byState[data[i].properties.name] = data[i];
-      for (var j = 0; j < variables.length; j++) {
-        var n = variables[j];
-        ranges[n].min = Math.min(parseFloat(data[i].properties[n]), ranges[n].min);
-        ranges[n].max = Math.max(parseFloat(data[i].properties[n]), ranges[n].max);
-      }
     }
 
     var newFeatures = [];
@@ -79,18 +60,14 @@ function renderMap(statesData){
   }
 
   function setVariable(name) {
-    var scale = ranges[name];
     var b = document.querySelector("#variables");
     b.setAttribute( "data-name", name );
 
     usLayer.eachLayer(function(layer) {
-      var division = Math.floor(
-        (hues.length - 1) *
-        ((layer.feature.properties[name] - scale.min) /
-        (scale.max - scale.min)));
+      color = getColor(layer.feature.properties[name], name)
 
       layer.setStyle({
-        fillColor: hues[division],
+        fillColor: color,
         fillOpacity: 0.8,
         weight: 0.5,
         opacity: 0.5,
@@ -146,15 +123,11 @@ function renderMap(statesData){
 
     var b = document.querySelector("#variables");
     var property = b.getAttribute( "data-name" );
-    var scale = ranges[property];
 
-    var division = Math.floor(
-      (hues.length - 1) *
-      ((layer.feature.properties[property] - scale.min) /
-      (scale.max - scale.min)));
+    color = getColor(layer.feature.properties[property], property)
 
     layer.setStyle({
-      fillColor: hues[division],
+      fillColor: color,
       fillOpacity: 0.8,
       weight: 0.5,
       opacity: 0.5,
