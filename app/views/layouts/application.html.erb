@@ -7,33 +7,9 @@
 </head>
 <body>
 
-  <header class="navbar navbar-fixed-top navbar-default">
-          <nav class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <a class="navbar-brand brand" href="http://www.nrel.gov/">
-              <%= image_tag "nrel_logo.png", size: "132x47" %>
-            </a>
-            <li class="navbar-right"> <%= link_to "About Open PV Market Mapper 2.0",   '#' %> </li>
-            <form class="navbar-form" role="search">
-              <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Enter a state (Ex: Alaska)">
-                <i class="glyphicon glyphicon-search form-control-feedback"></i>
-              </div>
-            </form>
-          </ul>
-        </div>
-      </nav>
-     </header>
+<%= render partial: './navbar' %>
 
-       <%= yield %>
+<%= yield %>
 
 <%= javascript_include_tag 'application' %>
 <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
