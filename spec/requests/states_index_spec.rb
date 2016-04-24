@@ -24,7 +24,7 @@ RSpec.describe "get states index" do
             "name"=>"Julyarado",
             "Average Cost ($/W)"=>"100",
             "Total Installs"=>"300",
-            "Total Capacity"=>"200"
+            "Total Capacity (MW)"=>"200"
         },
           "geometry"=>{"type"=>"Polygon",
           "coordinates"=>[[[10]]]}}

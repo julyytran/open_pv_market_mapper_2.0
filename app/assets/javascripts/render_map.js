@@ -21,7 +21,7 @@ function renderMap(statesData){
   var variables = [
     'Average Cost ($/W)',
     'Total Installs',
-    'Total Capacity'];
+    'Total Capacity (MW)'];
 
   var ranges = {};
 
@@ -107,6 +107,8 @@ function renderMap(statesData){
         dblclick: zoomToMap
       });
     });
+
+    // map.legendControl.removeLegend(LegendHTML());
     map.legendControl.addLegend(getLegendHTML());
   }
 
