@@ -6,7 +6,9 @@ function renderMap(statesData){
 
   L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
 
-  var map = L.mapbox.map('map').setView([38.97416, -95.23252], 4);
+  var map = L.mapbox.map('map', null, { zoomControl: false }).setView([38.97416, -95.23252], 4);
+
+  new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 
   var variables = [
     'Average Cost ($/W)',
@@ -82,6 +84,7 @@ function renderMap(statesData){
     });
 
     map.legendControl.addLegend(getLegendHTML());
+
   }
 
 // ----------------mouseover.js-----------------
