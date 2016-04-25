@@ -83,8 +83,15 @@ function renderMap(statesData){
       });
     });
 
-    map.legendControl.addLegend(getLegendHTML());
-
+      map.legendControl.addLegend(getLegendHTML());
+    // lastLegendProperty = $('#map > div.leaflet-control-container > div.leaflet-bottom.leaflet-right > div.map-legends.wax-legends.leaflet-control > div > span > b')
+    // debugger
+    // if (document.querySelector(".map-legend") == null) {
+    // } else if (lastLegendProperty !== "[<b>" + name + "</b>]") {
+    //   $('.map-legend').remove();
+      // map.legendControl.removeLegend(document.querySelector(".map-legend").innerHTML)
+    // }
+    // var legend = document.querySelector(".map-legend");
   }
 
 // ----------------mouseover.js-----------------

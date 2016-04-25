@@ -1,4 +1,4 @@
-function getLegendHTML() {
+function getLegendHTML(property) {
   var b = document.querySelector("#variables");
   var property = b.getAttribute( "data-name" );
 
@@ -26,6 +26,7 @@ function getLegendHTML() {
   }
 
   return '<span><b>' + property + '</b></span><ul>' + labels.join('') + '</ul>';
+
 }
 
 function getColor(p, property) {
