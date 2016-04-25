@@ -83,18 +83,29 @@ function renderMap(statesData){
       });
     });
 
+    // function clearLegend(){
+    //   $('.map-legends').empty()
+    // }
+
+    function changeLegend(){
+      var previousLegend = $('.map-legends').html()
+      map.legendControl.removeLegend(previousLegend)
       map.legendControl.addLegend(getLegendHTML());
+    }
+
+    changeLegend()
     // lastLegendProperty = $('#map > div.leaflet-control-container > div.leaflet-bottom.leaflet-right > div.map-legends.wax-legends.leaflet-control > div > span > b')
     // debugger
     // if (document.querySelector(".map-legend") == null) {
     // } else if (lastLegendProperty !== "[<b>" + name + "</b>]") {
     //   $('.map-legend').remove();
-      // map.legendControl.removeLegend(document.querySelector(".map-legend").innerHTML)
+      // map.legendControl.`removeLegend(document.querySelector(".map-legend").innerHTML)
     // }
     // var legend = document.querySelector(".map-legend");
   }
 
-// ----------------mouseover.js-----------------
+
+// ----------------mouseover-----------------
   var popup = new L.Popup({ autoPan: false });
   var closeTooltip;
 
@@ -148,7 +159,7 @@ function renderMap(statesData){
     }, 100);
   }
 
-// -----------------zoom.js--------------------
+// -----------------zoom--------------------
   function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
   }
