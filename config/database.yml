@@ -14,3 +14,5 @@ test:
 production:
   <<: *default
   database: open_pv_market_mapper_production
+  username: open_pv_market_mapper
+  password: <%= ENV['OPEN_PV_MARKET_MAPPER_DATABASE_PASSWORD'] %>
