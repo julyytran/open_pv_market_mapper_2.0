@@ -28,7 +28,7 @@ function renderMap(statesData){
       .appendTo($select);
 
   var usLayer = L.mapbox.featureLayer()
-      .loadURL('https://www.mapbox.com/mapbox.js/assets/data/us.geojson')
+      .loadURL('http://localhost:3000/api/v1/coordinates')
       .addTo(map)
       .on('ready', loadData);
 
