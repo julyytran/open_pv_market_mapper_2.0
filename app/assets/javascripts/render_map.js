@@ -87,7 +87,7 @@ function renderMap(statesData){
 
   }
 
-// ----------------mouseover.js-----------------
+// ----------------mouseover-----------------
   var popup = new L.Popup({ autoPan: false });
   var closeTooltip;
 
@@ -141,7 +141,7 @@ function renderMap(statesData){
     }, 100);
   }
 
-// -----------------zoom.js--------------------
+// -----------------zoom--------------------
   function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
   }

@@ -9,10 +9,8 @@ class NRELService
 
   def get_state_data
     state_abbreviations.map do |abbr|
-      url = "/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{abbr}"
-      puts "#{url}"
+      response = parse("/api/solar/open_pv/installs/summaries?api_key=#{ENV["NREL_API_KEY"]}&state=#{abbr}")
 
-      response = parse(url)
       avg_cost_pw = response["result"]["avg_cost_pw"]
       total_capacity = response["result"]["total_capacity"]
       total_installs = response["result"]["total_installs"]
