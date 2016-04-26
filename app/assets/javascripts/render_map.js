@@ -64,6 +64,20 @@ function renderMap(statesData){
   function setVariable(name) {
     var b = document.querySelector("#variables");
     b.setAttribute( "data-name", name );
+// debugger
+    if (name === "Total Installs") {
+      $('#total_installs').show()
+      $('#avg_cost').hide()
+      $('#total_capacity').hide()
+    } else if (name === "Average Cost ($/W)") {
+      $('#total_installs').hide()
+      $('#avg_cost').show()
+      $('#total_capacity').hide()
+    } else {
+      $('#total_installs').hide()
+      $('#avg_cost').hide()
+      $('#total_capacity').show()
+    }
 
     usLayer.eachLayer(function(layer) {
       color = getColor(layer.feature.properties[name], name)
@@ -83,7 +97,7 @@ function renderMap(statesData){
       });
     });
 
-    map.legendControl.addLegend(getLegendHTML());
+    // map.legendControl.addLegend(getLegendHTML());
 
   }
 

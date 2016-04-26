@@ -1,6 +1,30 @@
 body { margin:0; padding:0; }
 #map { position:absolute; top:0; bottom:0; width:100%; }
 
+#avg_cost {
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  z-index: 10;
+  width: 170px;
+}
+#total_capacity {
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  z-index: 10;
+  width: 170px;
+  display: none;
+}
+#total_installs {
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  z-index: 10;
+  width: 170px;
+  display: none;
+}
+
 .map-legend ul {
   list-style: none;
   padding-left: 0;
