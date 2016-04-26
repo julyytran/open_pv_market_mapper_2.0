@@ -28,12 +28,12 @@ function renderMap(statesData){
       .appendTo($select);
 
   var usLayer = L.mapbox.featureLayer()
-      .loadURL('http://localhost:3000/api/v1/coordinates')
+      .loadURL('/api/v1/coordinates')
       .addTo(map)
       .on('ready', loadData);
 
   function loadData() {
-    $.getJSON('http://localhost:3000/api/v1/states')
+    $.getJSON('/api/v1/states')
       .done(function(data) {
         joinData(data, usLayer);
       });
