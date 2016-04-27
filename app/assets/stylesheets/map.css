@@ -29,15 +29,15 @@ body { margin:0; padding:0; }
 
 #info {
   display: none;
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
   margin: auto;
   width: 50%;
-  height: 400px;
+  height: 50%;
   z-index: 10;
   background-color: #ffffcc;
-  top: 100px;
+  top: 50px;
   opacity: .8;
   border-style: groove;
   border-color: #ffffcc;
