@@ -2,7 +2,45 @@ $(document).ready(function(){
   renderMap();
 });
 
+$('#about').on('click', function(){
+  $('#info').toggle()
+})
+
+$('#info').on('click', function(){
+  $(this).toggle()
+})
+
 function renderMap(statesData){
+  var statesCoordinates;
+
+  $('#search').keypress(function(e){
+    if (e.keyCode == 13) {
+      e.preventDefault()
+      var query = $('#search').val()
+
+      var hiddenLayer = L.geoJson(statesCoordinates,  {
+           style: getStyle,
+       }).addTo(map);
+
+       function getStyle(feature) {
+           return {
+               weight: 2,
+               opacity: 0.1,
+               color: 'black',
+               fillOpacity: 0,
+           };
+       }
+
+       hiddenLayer.eachLayer(function(layer) {
+         if (layer.feature.properties.name == query) {
+          map.fitBounds(layer.getBounds());
+          $('#search').val('')
+         }
+       });
+
+      map.removeLayer(hiddenLayer)
+    }
+  })
 
   L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
 
@@ -36,6 +74,7 @@ function renderMap(statesData){
     $.getJSON('/api/v1/states')
       .done(function(data) {
         joinData(data, usLayer);
+        statesCoordinates = data;
       });
   }
 
@@ -65,6 +104,20 @@ function renderMap(statesData){
     var b = document.querySelector("#variables");
     b.setAttribute( "data-name", name );
 
+    if (name === "Total Installs") {
+      $('#total_installs').show()
+      $('#avg_cost').hide()
+      $('#total_capacity').hide()
+    } else if (name === "Average Cost ($/W)") {
+      $('#total_installs').hide()
+      $('#avg_cost').show()
+      $('#total_capacity').hide()
+    } else {
+      $('#total_installs').hide()
+      $('#avg_cost').hide()
+      $('#total_capacity').show()
+    }
+
     usLayer.eachLayer(function(layer) {
       color = getColor(layer.feature.properties[name], name)
 
@@ -82,9 +135,6 @@ function renderMap(statesData){
         dblclick: zoomToMap
       });
     });
-
-    map.legendControl.addLegend(getLegendHTML());
-
   }
 
 // ----------------mouseover-----------------

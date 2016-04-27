@@ -1,2 +1,33 @@
 <div id='map'></div>
+<div id='hidden-map'></div>
 <div id='variables' class='menu-ui'></div>
+<%= image_tag('avg_cost.png', id: 'avg_cost') %>
+<%= image_tag('total_installs.png', id: 'total_installs') %>
+<%= image_tag('total_capacity.png', id: 'total_capacity') %>
+<div id="info">
+  <a class="boxclose" id="boxclose"></a>
+<h1>Open PV Market Mapper 2.0</h1>
+<p>
+  <br>The Open PV Market Mapper 2.0 visualizes data regarding solar panel installations in the United States, using the
+  <a href="https://openpv.nrel.gov/about" target="_blank">
+    National Renewable Energy Laboratory's (NREL) Open PV database.
+  </a>
+    The database contains information on installs dating from 1969 onwards,
+    and is continually updated with user-inputted data from the public, government, and industry.
+    The data in these visualizations are updated daily with any changes made to the NREL database.
+    <br><br>You can currently view by state 1 of 3 summary data metrics calculated using all points in the database:<br>
+  </p>
+<div class="center">
+  <ul>
+    <li>Average Cost ($/W): the average cost per watt for an installation</li>
+    <li>Total Installations: number of total solar installations</li>
+    <li>Total Capacity (MW): the collective amount of power, in megawatts, that can be produced by the systems</li>
+  </ul>
+</div>
+<p><br>Visualizations over time and by county are coming soon!
+  <br><br>This project is open-source and available on
+  <a href="https://github.com/julyytran/open_pv_market_mapper_2.0" target="_blank">
+    Github.
+  </a>
+<p>
+</div>
