@@ -6,7 +6,7 @@ body { margin:0; padding:0; }
   bottom:10px;
   right:0px;
   z-index: 10;
-  width: 10%;
+  width: 13%;
 }
 
 #total_capacity {
@@ -14,7 +14,7 @@ body { margin:0; padding:0; }
   bottom:9px;
   right:0px;
   z-index: 10;
-  width: 10%;
+  width: 13%;
   display: none;
 }
 
@@ -23,7 +23,7 @@ body { margin:0; padding:0; }
   bottom:10px;
   right:0px;
   z-index: 10;
-  width: 10%;
+  width: 13%;
   display: none;
 }
 
