@@ -2,7 +2,47 @@ $(document).ready(function(){
   renderMap();
 });
 
+$('#about').on('click', function(){
+  $('#info').toggle()
+})
+
+$('#info').on('click', function(){
+  $(this).toggle()
+})
+
 function renderMap(statesData){
+  var statesCoordinates;
+
+  $('#search').keypress(function(e){
+    if (e.keyCode == 13) {
+      e.preventDefault()
+      var query = $('#search').val()
+
+      var hiddenLayer = L.geoJson(statesCoordinates,  {
+           style: getStyle,
+       }).addTo(map);
+
+       function getStyle(feature) {
+           return {
+               weight: 2,
+               opacity: 0.1,
+               color: 'black',
+               fillOpacity: 0,
+           };
+       }
+
+
+      // var hiddenLayer = L.mapbox.featureLayer()
+      //     .loadURL('/api/v1/coordinates')
+      //     .addTo(map)
+          // .on('ready', zoomToQuery);
+
+      map.setView([38.97416, -95.23252], 4)
+      // debugger
+      map.removeLayer(hiddenLayer)
+      // state = statesCoordinates.filter(function(state) { return state.properties.name == query})[0];
+    }
+  })
 
   L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
 
@@ -36,6 +76,7 @@ function renderMap(statesData){
     $.getJSON('/api/v1/states')
       .done(function(data) {
         joinData(data, usLayer);
+        statesCoordinates = data;
       });
   }
 
@@ -64,7 +105,7 @@ function renderMap(statesData){
   function setVariable(name) {
     var b = document.querySelector("#variables");
     b.setAttribute( "data-name", name );
-// debugger
+
     if (name === "Total Installs") {
       $('#total_installs').show()
       $('#avg_cost').hide()
@@ -96,9 +137,6 @@ function renderMap(statesData){
         dblclick: zoomToMap
       });
     });
-
-    // map.legendControl.addLegend(getLegendHTML());
-
   }
 
 // ----------------mouseover-----------------

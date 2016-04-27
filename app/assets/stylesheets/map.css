@@ -25,6 +25,21 @@ body { margin:0; padding:0; }
   display: none;
 }
 
+#info {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  height: 300px;
+  z-index: 10;
+  background-color: white;
+  top: 200px;
+  opacity: .8;
+  border-radius: 20px;
+}
+
 .map-legend ul {
   list-style: none;
   padding-left: 0;
