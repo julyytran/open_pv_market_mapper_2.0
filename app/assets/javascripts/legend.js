@@ -11,7 +11,7 @@ function getLegendHTML() {
     labels = [],
     from, to;
 } else {
-    var grades = [0, 5, 25, 100, 300],
+    var grades = [0, 1, 5, 25, 100, 300],
     labels = [],
     from, to;
 }
@@ -48,7 +48,7 @@ function getColor(p, property) {
         p > 100  ? '#31a354' :
         p > 25  ? '#74c476' :
         p > 5  ? '#a1d99b' :
-        p > 0   ? '#c7e9c0' :
+        p > 1   ? '#c7e9c0' :
         '#edf8e9';
   }
 }

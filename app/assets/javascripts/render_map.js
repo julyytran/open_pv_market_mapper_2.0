@@ -30,7 +30,7 @@ function renderMap(statesData){
                fillOpacity: 0,
            };
        }
-       
+
        hiddenLayer.eachLayer(function(layer) {
          if (layer.feature.properties.name == query) {
           map.fitBounds(layer.getBounds());
