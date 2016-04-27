@@ -30,17 +30,15 @@ function renderMap(statesData){
                fillOpacity: 0,
            };
        }
+       
+       hiddenLayer.eachLayer(function(layer) {
+         if (layer.feature.properties.name == query) {
+          map.fitBounds(layer.getBounds());
+          $('#search').val('')
+         }
+       });
 
-
-      // var hiddenLayer = L.mapbox.featureLayer()
-      //     .loadURL('/api/v1/coordinates')
-      //     .addTo(map)
-          // .on('ready', zoomToQuery);
-
-      map.setView([38.97416, -95.23252], 4)
-      // debugger
       map.removeLayer(hiddenLayer)
-      // state = statesCoordinates.filter(function(state) { return state.properties.name == query})[0];
     }
   })
 
