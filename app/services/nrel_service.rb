@@ -1,3 +1,5 @@
+require 'csv'
+
 class NRELService
   include StatesHelper
 
@@ -34,6 +36,23 @@ class NRELService
 
       state = State.find_by(abbreviation: abbr)
       state.update(avg_cost_pw: avg_cost_pw, total_capacity: total_capacity, total_installs: total_installs)
+    end
+  end
+
+  def create_installs_csv
+    state_abbreviations.each do |abbr|
+      raw_data = @connection.get("/api/solar/open_pv/installs/index?api_key=#{ENV["NREL_API_KEY"]}&state=#{abbr}&nppage=300000&export=true").body.split(/\n/)
+      raw_data.shift
+
+      input_data = raw_data.map do |raw_datum|
+        raw_datum.split
+      end
+
+      CSV.open("/lib/assets/installs_data.csv", "a") do |csv|
+        input_data.each do |row|
+          csv << row[0].split(",")
+        end
+      end
     end
   end
 
