@@ -48,11 +48,7 @@ class NRELService
         raw_datum.split
       end
 
-      CSV.open("/lib/assets/installs_data.csv", "a") do |csv|
-        input_data.each do |row|
-          csv << row[0].split(",")
-        end
-      end
+      write_to_csv(input_data)
     end
   end
 
@@ -60,5 +56,13 @@ class NRELService
 
   def parse(path)
     JSON.parse(@connection.get(path).body)
+  end
+
+  def write_to_csv(input_data)
+    CSV.open("/lib/assets/installs_data.csv", "a") do |csv|
+      input_data.each do |row|
+        csv << row[0].split(",")
+      end
+    end
   end
 end
