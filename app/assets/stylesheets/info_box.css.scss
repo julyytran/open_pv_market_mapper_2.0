@@ -1,0 +1,45 @@
+#info {
+  display: none;
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  z-index: 10;
+  background-color: #ffffcc;
+  top: 50px;
+  opacity: .8;
+  border-style: groove;
+  border-color: #ffffcc;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+.center{
+    margin:0 auto;
+    text-align:left;
+}
+
+a.boxclose{
+    float:right;
+    margin-top:0px;
+    margin-right:0px;
+    cursor:pointer;
+    color: #333333;
+    font-size: 31px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 3px;
+}
+
+.boxclose:before {
+    content: "×";
+}
