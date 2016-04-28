@@ -83,10 +83,16 @@ function renderMap(statesData){
       if ($(this).val() == "Total Installs Time Lapse") {
         map.removeLayer(usLayer)
         renderTimeLapse();
+        // $('#torque-pause').addClass('playing');
       } else {
+        $('#torque-slider').hide()
+        $('#torque-pause').hide()
+        // $('#torque-pause').addClass('playing');
+
         torqueLayer.stop();
         map.removeLayer(timeLapse);
         map.removeLayer(torqueLayer);
+
         map.addLayer(usLayer)
         setVariable($(this).val());
       }
@@ -266,17 +272,21 @@ function getLegend(name) {
            torqueLayer.setStep(step);
          }
      });
-     // each time time changes, move the slider
+
      torqueLayer.on('change:time', function(changes) {
        $("#torque-slider" ).slider({ value: changes.step });
        var month_year = changes.time.toString().substr(4).split(' ');
-       torqueTime.text(month_year[0] + " - " + month_year[2]);
+       torqueTime.text(month_year[2]);
      });
-     // play-pause toggle
+
+    //  change to use on click
      $("#torque-pause").click(function(){
        torqueLayer.toggle();
        $(this).toggleClass('playing');
      });
+
+     $('#torque-slider').show()
+     $('#torque-pause').show()
    };
 
 }
