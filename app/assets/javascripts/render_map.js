@@ -84,24 +84,11 @@ function renderMap(statesData){
         map.removeLayer(usLayer)
         renderTimeLapse();
       } else {
-        // debugger
+        torqueLayer.stop();
         map.removeLayer(timeLapse);
         map.removeLayer(torqueLayer);
         map.addLayer(usLayer)
         setVariable($(this).val());
-
-        // var b = document.querySelector("#variables");
-        // var property = b.getAttribute( "data-name" );
-          //
-          // if (typeof timeLapse !== 'undefined') {
-          //   debugger
-          //   map.removeLayer(timeLapse);
-          //   map.addLayer(usLayer)
-          //   setVariable($(this).val());
-          // } else {
-          //   map.addLayer(usLayer)
-          //   setVariable($(this).val());
-          // }
       }
     });
 
@@ -261,8 +248,6 @@ function getLegend(name) {
     var name = b.getAttribute( "data-name" );
 
     getLegend(name);
-
-    // $(body).css("background-color","blue");
 
     timeLapse.addTo(map)
     torqueLayer.addTo(map);
