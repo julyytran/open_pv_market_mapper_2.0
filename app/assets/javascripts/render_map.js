@@ -10,7 +10,7 @@ $('#info').on('click', function(){
   $(this).toggle()
 })
 
-function renderMap(statesData){
+function renderMap(){
   var statesCoordinates;
 
   $('#search').keypress(function(e){
@@ -50,13 +50,21 @@ function renderMap(statesData){
 
   var variables = [
     'Average Cost ($/W)',
+    'Total Capacity (MW)',
     'Total Installs',
-    'Total Capacity (MW)'];
+    'Total Installs Time Lapse'
+  ];
 
   var $select = $('<select></select>')
     .appendTo($('#variables'))
     .on('change', function() {
-      setVariable($(this).val());
+      if ($(this).val() == "Total Installs Time Lapse") {
+        map.removeLayer(usLayer)
+        renderTimeLapse();
+      } else {
+        // renderMap($(this).val())
+        setVariable($(this).val());
+      }
     });
 
   for (var i = 0; i < variables.length; i++)
@@ -199,4 +207,49 @@ function renderMap(statesData){
   function zoomToMap(e) {
     map.setView([38.97416, -95.23252], 4)
   }
+
+// --------time lapse--------------
+function renderTimeLapse() {
+  // L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
+
+  // var map = L.mapbox.map('map', 'null', { zoomControl: false }).setView([38.97416, -95.23252], 4);
+
+
+  var baseMap = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
+
+  baseMap.addTo(map)
+
+  // new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+
+  var style =
+    'Map {' +
+    '-torque-time-attribute: "date";' +
+    '-torque-aggregation-function: "count(cartodb_id)";' +
+    '-torque-frame-count: 760;' +
+    '-torque-animation-duration: 17;' +
+    '-torque-resolution: 1' +
+    '}' +
+    '#layer {' +
+    '  marker-width: 2;' +
+    '  marker-fill-opacity: 1;' +
+    '  marker-fill: #0F3B82; ' +
+    '  comp-op: "lighten";' +
+    '  [value > 2] { marker-fill: #A0F4FF; }' +
+    '  [value > 7] { marker-fill: #FFFFFF; }' +
+    '  [frame-offset = 1] { marker-width: 10; marker-fill-opacity: 0.05;}' +
+    '  [frame-offset = 2] { marker-width: 20; marker-fill-opacity: 0.02;}' +
+    '}';
+
+  var torqueLayer = new L.TorqueLayer({
+    user: 'julyytran',
+    table: 'installs_data',
+    cartocss: style,
+    blendmode: 'lighter',
+    tiler_protocol: 'https',
+    tiler_port: 443
+  });
+
+  torqueLayer.addTo(map);
+  torqueLayer.play();
+}
 }
