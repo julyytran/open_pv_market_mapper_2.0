@@ -262,6 +262,8 @@ function getLegend(name) {
 
     getLegend(name);
 
+    // $(body).css("background-color","blue");
+
     timeLapse.addTo(map)
     torqueLayer.addTo(map);
     torqueLayer.play();
