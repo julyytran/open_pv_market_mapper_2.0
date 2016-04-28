@@ -84,7 +84,7 @@ function renderMap(statesData){
         map.removeLayer(usLayer)
         renderTimeLapse();
       } else {
-        debugger
+        // debugger
         map.removeLayer(timeLapse);
         map.removeLayer(torqueLayer);
         map.addLayer(usLayer)
@@ -150,19 +150,7 @@ function renderMap(statesData){
     var b = document.querySelector("#variables");
     b.setAttribute( "data-name", name );
 
-    if (name === "Total Installs") {
-      $('#total_installs').show()
-      $('#avg_cost').hide()
-      $('#total_capacity').hide()
-    } else if (name === "Average Cost ($/W)") {
-      $('#total_installs').hide()
-      $('#avg_cost').show()
-      $('#total_capacity').hide()
-    } else {
-      $('#total_installs').hide()
-      $('#avg_cost').hide()
-      $('#total_capacity').show()
-    }
+    getLegend(name);
 
     usLayer.eachLayer(function(layer) {
       color = getColor(layer.feature.properties[name], name)
@@ -183,6 +171,26 @@ function renderMap(statesData){
     });
   }
 
+function getLegend(name) {
+  if (name === "Total Installs") {
+    $('#total_installs').show()
+    $('#avg_cost').hide()
+    $('#total_capacity').hide()
+  } else if (name === "Average Cost ($/W)") {
+    $('#total_installs').hide()
+    $('#avg_cost').show()
+    $('#total_capacity').hide()
+  } else if (name === "Total Capacity (MW)") {
+    $('#total_installs').hide()
+    $('#avg_cost').hide()
+    $('#total_capacity').show()
+  } else {
+    debugger
+    $('#total_installs').hide()
+    $('#avg_cost').hide()
+    $('#total_capacity').hide()
+  }
+}
 // ----------------mouseover-----------------
   var popup = new L.Popup({ autoPan: false });
   var closeTooltip;
@@ -247,50 +255,15 @@ function renderMap(statesData){
   }
 
 // --------time lapse--------------
+  function renderTimeLapse() {
+    var b = document.querySelector("#variables");
+    b.setAttribute( "data-name", "time-lapse" );
+    var name = b.getAttribute( "data-name" );
 
-function renderTimeLapse() {
-  // L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
+    getLegend(name);
 
-  // var map = L.mapbox.map('map', 'null', { zoomControl: false }).setView([38.97416, -95.23252], 4);
-  var b = document.querySelector("#variables");
-  b.setAttribute( "data-name", "time-lapse" );
-
-
-  // var timeLapse = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
-
-  timeLapse.addTo(map)
-
-  // new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
-
-  // var style =
-  //   'Map {' +
-  //   '-torque-time-attribute: "date";' +
-  //   '-torque-aggregation-function: "count(cartodb_id)";' +
-  //   '-torque-frame-count: 760;' +
-  //   '-torque-animation-duration: 17;' +
-  //   '-torque-resolution: 1' +
-  //   '}' +
-  //   '#layer {' +
-  //   '  marker-width: 2;' +
-  //   '  marker-fill-opacity: 1;' +
-  //   '  marker-fill: #0F3B82; ' +
-  //   '  comp-op: "lighten";' +
-  //   '  [value > 2] { marker-fill: #A0F4FF; }' +
-  //   '  [value > 7] { marker-fill: #FFFFFF; }' +
-  //   '  [frame-offset = 1] { marker-width: 10; marker-fill-opacity: 0.05;}' +
-  //   '  [frame-offset = 2] { marker-width: 20; marker-fill-opacity: 0.02;}' +
-  //   '}';
-
-  // var torqueLayer = new L.TorqueLayer({
-  //   user: 'julyytran',
-  //   table: 'installs_data',
-  //   cartocss: style,
-  //   blendmode: 'lighter',
-  //   tiler_protocol: 'https',
-  //   tiler_port: 443
-  // });
-
-  torqueLayer.addTo(map);
-  torqueLayer.play();
-}
+    timeLapse.addTo(map)
+    torqueLayer.addTo(map);
+    torqueLayer.play();
+  }
 }
