@@ -2,15 +2,7 @@ $(document).ready(function(){
   renderMap();
 });
 
-$('#about').on('click', function(){
-  $('#info').toggle()
-})
-
-$('#info').on('click', function(){
-  $(this).toggle()
-})
-
-function renderMap(){
+function renderMap(statesData){
   var statesCoordinates;
 
   $('#search').keypress(function(e){
@@ -55,6 +47,8 @@ function renderMap(){
     'Total Installs Time Lapse'
   ];
 
+   var timeLapse = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
+
   var $select = $('<select></select>')
     .appendTo($('#variables'))
     .on('change', function() {
@@ -62,8 +56,18 @@ function renderMap(){
         map.removeLayer(usLayer)
         renderTimeLapse();
       } else {
-        // renderMap($(this).val())
-        setVariable($(this).val());
+        var b = document.querySelector("#variables");
+        var property = b.getAttribute( "data-name" );
+
+        // debugger
+          if (property == "time-lapse") {
+            map.removeLayer(timeLapse);
+            map.addLayer(usLayer)
+            setVariable($(this).val());
+          } else {
+            map.addLayer(usLayer)
+            setVariable($(this).val());
+          }
       }
     });
 
@@ -209,15 +213,18 @@ function renderMap(){
   }
 
 // --------time lapse--------------
+
 function renderTimeLapse() {
   // L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
 
   // var map = L.mapbox.map('map', 'null', { zoomControl: false }).setView([38.97416, -95.23252], 4);
+  var b = document.querySelector("#variables");
+  b.setAttribute( "data-name", "time-lapse" );
 
 
-  var baseMap = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
+  // var timeLapse = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
 
-  baseMap.addTo(map)
+  timeLapse.addTo(map)
 
   // new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 
