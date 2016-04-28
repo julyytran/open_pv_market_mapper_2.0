@@ -1,6 +1,6 @@
-desc "This task is called by the Heroku scheduler add-on"
+desc " Heroku scheduler to update summaries API data"
 task :update_state_data => :environment do
   puts "Updating state data..."
   NRELService.new.update_state_data
-  puts "done!"
+  puts "Done!"
 end

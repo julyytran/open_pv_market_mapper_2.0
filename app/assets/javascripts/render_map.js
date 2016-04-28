@@ -2,14 +2,6 @@ $(document).ready(function(){
   renderMap();
 });
 
-$('#about').on('click', function(){
-  $('#info').toggle()
-})
-
-$('#info').on('click', function(){
-  $(this).toggle()
-})
-
 function renderMap(statesData){
   var statesCoordinates;
 
@@ -50,13 +42,59 @@ function renderMap(statesData){
 
   var variables = [
     'Average Cost ($/W)',
+    'Total Capacity (MW)',
     'Total Installs',
-    'Total Capacity (MW)'];
+    'Total Installs Time Lapse'
+  ];
+
+   var timeLapse = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
+
+   var style =
+     'Map {' +
+     '-torque-time-attribute: "date";' +
+     '-torque-aggregation-function: "count(cartodb_id)";' +
+     '-torque-frame-count: 760;' +
+     '-torque-animation-duration: 17;' +
+     '-torque-resolution: 1' +
+     '}' +
+     '#layer {' +
+     '  marker-width: 2;' +
+     '  marker-fill-opacity: 1;' +
+     '  marker-fill: #0F3B82; ' +
+     '  comp-op: "lighten";' +
+     '  [value > 2] { marker-fill: #A0F4FF; }' +
+     '  [value > 7] { marker-fill: #FFFFFF; }' +
+     '  [frame-offset = 1] { marker-width: 10; marker-fill-opacity: 0.05;}' +
+     '  [frame-offset = 2] { marker-width: 20; marker-fill-opacity: 0.02;}' +
+     '}';
+
+     var torqueLayer = new L.TorqueLayer({
+       user: 'julyytran',
+       table: 'installs_data',
+       cartocss: style,
+       blendmode: 'lighter',
+       tiler_protocol: 'https',
+       tiler_port: 443
+     });
 
   var $select = $('<select></select>')
     .appendTo($('#variables'))
     .on('change', function() {
-      setVariable($(this).val());
+      if ($(this).val() == "Total Installs Time Lapse") {
+        map.removeLayer(usLayer)
+        renderTimeLapse();
+        $('#torque-pause').addClass('playing');
+      } else {
+        $('#torque-slider').hide()
+        $('#torque-pause').hide()
+
+        torqueLayer.stop();
+        map.removeLayer(timeLapse);
+        map.removeLayer(torqueLayer);
+
+        map.addLayer(usLayer)
+        setVariable($(this).val());
+      }
     });
 
   for (var i = 0; i < variables.length; i++)
@@ -104,19 +142,7 @@ function renderMap(statesData){
     var b = document.querySelector("#variables");
     b.setAttribute( "data-name", name );
 
-    if (name === "Total Installs") {
-      $('#total_installs').show()
-      $('#avg_cost').hide()
-      $('#total_capacity').hide()
-    } else if (name === "Average Cost ($/W)") {
-      $('#total_installs').hide()
-      $('#avg_cost').show()
-      $('#total_capacity').hide()
-    } else {
-      $('#total_installs').hide()
-      $('#avg_cost').hide()
-      $('#total_capacity').show()
-    }
+    getLegend(name);
 
     usLayer.eachLayer(function(layer) {
       color = getColor(layer.feature.properties[name], name)
@@ -137,6 +163,25 @@ function renderMap(statesData){
     });
   }
 
+function getLegend(name) {
+  if (name === "Total Installs") {
+    $('#total_installs').show()
+    $('#avg_cost').hide()
+    $('#total_capacity').hide()
+  } else if (name === "Average Cost ($/W)") {
+    $('#total_installs').hide()
+    $('#avg_cost').show()
+    $('#total_capacity').hide()
+  } else if (name === "Total Capacity (MW)") {
+    $('#total_installs').hide()
+    $('#avg_cost').hide()
+    $('#total_capacity').show()
+  } else {
+    $('#total_installs').hide()
+    $('#avg_cost').hide()
+    $('#total_capacity').hide()
+  }
+}
 // ----------------mouseover-----------------
   var popup = new L.Popup({ autoPan: false });
   var closeTooltip;
@@ -199,4 +244,48 @@ function renderMap(statesData){
   function zoomToMap(e) {
     map.setView([38.97416, -95.23252], 4)
   }
+
+// --------time lapse--------------
+  function renderTimeLapse() {
+    var b = document.querySelector("#variables");
+    b.setAttribute( "data-name", "time-lapse" );
+    var name = b.getAttribute( "data-name" );
+
+    getLegend(name);
+
+    timeLapse.addTo(map)
+    torqueLayer.addTo(map);
+    createSlider(torqueLayer);
+    torqueLayer.play();
+  }
+
+  function createSlider(torqueLayer) {
+    var torqueTime = $('#torque-time');
+    $("#torque-slider").slider({
+         min: 0,
+         max: torqueLayer.options.steps,
+         value: 0,
+         step: 1,
+         slide: function(event, ui){
+           var step = ui.value;
+           torqueLayer.setStep(step);
+         }
+     });
+
+     torqueLayer.on('change:time', function(changes) {
+       $("#torque-slider" ).slider({ value: changes.step });
+       var month_year = changes.time.toString().substr(4).split(' ');
+       torqueTime.text(month_year[2]);
+     });
+
+     $("#torque-pause").on("click", function() {
+       torqueLayer.toggle();
+       $(this).toggleClass('playing');
+      //  debugger
+     });
+
+     $('#torque-slider').show()
+     $('#torque-pause').show()
+   };
+
 }
