@@ -83,11 +83,10 @@ function renderMap(statesData){
       if ($(this).val() == "Total Installs Time Lapse") {
         map.removeLayer(usLayer)
         renderTimeLapse();
-        // $('#torque-pause').addClass('playing');
+        $('#torque-pause').addClass('playing');
       } else {
         $('#torque-slider').hide()
         $('#torque-pause').hide()
-        // $('#torque-pause').addClass('playing');
 
         torqueLayer.stop();
         map.removeLayer(timeLapse);
@@ -279,10 +278,10 @@ function getLegend(name) {
        torqueTime.text(month_year[2]);
      });
 
-    //  change to use on click
-     $("#torque-pause").click(function(){
+     $("#torque-pause").on("click", function() {
        torqueLayer.toggle();
        $(this).toggleClass('playing');
+      //  debugger
      });
 
      $('#torque-slider').show()
