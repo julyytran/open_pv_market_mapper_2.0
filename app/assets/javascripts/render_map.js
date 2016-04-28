@@ -172,7 +172,6 @@ function getLegend(name) {
     $('#avg_cost').hide()
     $('#total_capacity').show()
   } else {
-    debugger
     $('#total_installs').hide()
     $('#avg_cost').hide()
     $('#total_capacity').hide()
@@ -251,6 +250,33 @@ function getLegend(name) {
 
     timeLapse.addTo(map)
     torqueLayer.addTo(map);
+    createSlider(torqueLayer);
     torqueLayer.play();
   }
+
+  function createSlider(torqueLayer) {
+    var torqueTime = $('#torque-time');
+    $("#torque-slider").slider({
+         min: 0,
+         max: torqueLayer.options.steps,
+         value: 0,
+         step: 1,
+         slide: function(event, ui){
+           var step = ui.value;
+           torqueLayer.setStep(step);
+         }
+     });
+     // each time time changes, move the slider
+     torqueLayer.on('change:time', function(changes) {
+       $("#torque-slider" ).slider({ value: changes.step });
+       var month_year = changes.time.toString().substr(4).split(' ');
+       torqueTime.text(month_year[0] + " - " + month_year[2]);
+     });
+     // play-pause toggle
+     $("#torque-pause").click(function(){
+       torqueLayer.toggle();
+       $(this).toggleClass('playing');
+     });
+   };
+
 }
