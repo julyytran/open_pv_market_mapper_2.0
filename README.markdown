@@ -10,7 +10,10 @@ You can currently view by state 1 of 3 summary data metrics calculated using all
 
 More visualizations over time and by county are coming soon!
 
-To run locally:
+# Development
+This app uses Ruby on Rails as a web app framework, the JavaScript libraries [Mapbox](https://www.mapbox.com/), [Leaflet](http://leafletjs.com/), and [CartoDB](https://cartodb.com/) to create the maps, and [jQuery](https://jquery.com/) and [Bootstrap](http://getbootstrap.com/) for styling. Data are collected from the [NREL Open PV API](https://developer.nrel.gov/docs/solar/openpv/) and are joined with coordinate data to be served as an internal API of [GeoJSON](http://geojson.org/).
+
+### To run locally:
 
 ```
 git clone git@github.com:julyytran/open_pv_market_mapper_2.0.git
@@ -21,5 +24,5 @@ rake db:migrate
 rake db:seed
 rails s
   ```
-
-Versioning information coming soon.
+### Visit in Production
+[Open PV Market Mapper 2.0](open-pv-market-mapper-2.herokuapp.com)
