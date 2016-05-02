@@ -5,8 +5,8 @@ The Open PV Market Mapper 2.0 visualizes data regarding solar panel installation
 You can currently view by state 1 of 3 summary data metrics calculated using all points in the database:
   - Average Cost ($/W): the average cost per watt for an installation
   - Total Capacity (MW): the collective amount of power, in megawatts, that can be produced by the systems
-  - Total Installations: number of total solar installations
-  - Total Installations Time Lapse: the number of installations as they happen each year
+  - Total Installs: number of total solar installations
+  - Total Installs Time Lapse: the number of installations as they happen each year
 
 More visualizations over time and by county are coming soon!
 
