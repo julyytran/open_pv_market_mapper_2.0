@@ -25,4 +25,4 @@ rake db:seed
 rails s
   ```
 ### Visit in Production
-[Open PV Market Mapper 2.0](open-pv-market-mapper-2.herokuapp.com)
+[Open PV Market Mapper 2.0](http://open-pv-market-mapper-2.herokuapp.com/)
