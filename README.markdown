@@ -1,5 +1,7 @@
 # Open PV Market Mapper 2.0
 
+![solar installs time lapse](https://cloud.githubusercontent.com/assets/14022835/15048083/1ddef1ae-12a5-11e6-9ba5-a46944e60ea3.gif)
+
 The Open PV Market Mapper 2.0 visualizes data regarding solar panel installations in the United States, using the [National Renewable Energy Laboratory's (NREL) Open PV database](https://openpv.nrel.gov/about). The database contains information on installs dating from 1969 onwards, and is continually updated with user-inputted data from the public, government, and industry. The data in these visualizations are updated daily with any changes made to the NREL database.
 
 You can currently view by state 1 of 3 summary data metrics calculated using all points in the database:
