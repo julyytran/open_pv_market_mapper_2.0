@@ -91,7 +91,7 @@ function renderMap(statesData){
         map.removeLayer(torqueLayer);
 
         map.addLayer(usLayer)
-        setVariable($(this).val(), usLayer);
+        setVariable($(this).val(), usLayer, map);
       }
     });
 
@@ -113,9 +113,6 @@ function renderMap(statesData){
         statesCoordinates = data;
       });
   }
-
-// -----------------zoom--------------------
-
 
 // --------time lapse--------------
   function renderTimeLapse() {
