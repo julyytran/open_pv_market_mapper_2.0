@@ -2,6 +2,13 @@ $(document).ready(function(){
   renderMap();
 });
 
+var variables = [
+  'Average Cost ($/W)',
+  'Total Capacity (MW)',
+  'Total Installs',
+  'Total Installs Time Lapse'
+];
+
 function renderMap(statesData){
   var statesCoordinates;
 
@@ -38,14 +45,7 @@ function renderMap(statesData){
 
   var map = L.mapbox.map('map').setView([38.97416, -95.23252], 4);
 
-  var variables = [
-    'Average Cost ($/W)',
-    'Total Capacity (MW)',
-    'Total Installs',
-    'Total Installs Time Lapse'
-  ];
-
-   var timeLapse = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
+   var darkBase = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
 
    var style =
      'Map {' +
@@ -87,11 +87,11 @@ function renderMap(statesData){
         $('#torque-pause').hide()
 
         torqueLayer.stop();
-        map.removeLayer(timeLapse);
+        map.removeLayer(darkBase);
         map.removeLayer(torqueLayer);
 
         map.addLayer(usLayer)
-        setVariable($(this).val());
+        setVariable($(this).val(), usLayer);
       }
     });
 
@@ -109,139 +109,13 @@ function renderMap(statesData){
   function loadData() {
     $.getJSON('/api/v1/states')
       .done(function(data) {
-        joinData(data, usLayer);
+        joinData(data, usLayer, map);
         statesCoordinates = data;
       });
   }
 
-  function joinData(data, layer) {
-    var usGeoJSON = usLayer.getGeoJSON(),
-        byState = {};
-
-    for (var i = 0; i < usGeoJSON.features.length; i++) {
-      byState[usGeoJSON.features[i].properties.name] =
-        usGeoJSON.features[i];
-    }
-
-    for (i = 0; i < data.length; i++) {
-      byState[data[i].properties.name] = data[i];
-    }
-
-    var newFeatures = [];
-    for (i in byState) {
-      newFeatures.push(byState[i]);
-    }
-
-    usLayer.setGeoJSON(newFeatures);
-    setVariable(variables[0]);
-  }
-
-  function setVariable(name) {
-    var b = document.querySelector("#variables");
-    b.setAttribute( "data-name", name );
-
-    getLegend(name);
-
-    usLayer.eachLayer(function(layer) {
-      color = getColor(layer.feature.properties[name], name)
-
-      layer.setStyle({
-        fillColor: color,
-        fillOpacity: 0.8,
-        weight: 0.5,
-        opacity: 0.5,
-      });
-
-      layer.on({
-        mousemove: mousemove,
-        mouseout: mouseout,
-        click: zoomToFeature,
-        dblclick: zoomToMap
-      });
-    });
-  }
-
-function getLegend(name) {
-  if (name === "Total Installs") {
-    $('#total_installs').show()
-    $('#avg_cost').hide()
-    $('#total_capacity').hide()
-  } else if (name === "Average Cost ($/W)") {
-    $('#total_installs').hide()
-    $('#avg_cost').show()
-    $('#total_capacity').hide()
-  } else if (name === "Total Capacity (MW)") {
-    $('#total_installs').hide()
-    $('#avg_cost').hide()
-    $('#total_capacity').show()
-  } else {
-    $('#total_installs').hide()
-    $('#avg_cost').hide()
-    $('#total_capacity').hide()
-  }
-}
-// ----------------mouseover-----------------
-  var popup = new L.Popup({ autoPan: false });
-  var closeTooltip;
-
-  function mousemove(e) {
-    var layer = e.target;
-    var b = document.querySelector("#variables");
-    var property = b.getAttribute( "data-name" );
-
-    if (property == "Average Cost ($/W)") {
-      var data = "$" + parseFloat(layer.feature.properties[property]).toFixed(2) + " per watt"
-  } else if (property == "Total Installs") {
-      var data = parseInt(layer.feature.properties[property]).toLocaleString() + " installations"
-  } else {
-      var data = parseFloat(layer.feature.properties[property]).toLocaleString() + " MW"
-  }
-
-    popup.setLatLng(e.latlng);
-    popup.setContent('<div class="marker-title">' + layer.feature.properties.name + '</div>' + data);
-
-    if (!popup._map) popup.openOn(map);
-      window.clearTimeout(closeTooltip);
-
-    layer.setStyle({
-      weight: 3,
-      opacity: 0.5,
-      fillOpacity: 0.9
-    });
-
-    if (!L.Browser.ie && !L.Browser.opera) {
-      layer.bringToFront();
-    }
-  }
-
-  function mouseout(e) {
-    var layer = e.target;
-
-    var b = document.querySelector("#variables");
-    var property = b.getAttribute( "data-name" );
-
-    color = getColor(layer.feature.properties[property], property)
-
-    layer.setStyle({
-      fillColor: color,
-      fillOpacity: 0.8,
-      weight: 0.5,
-      opacity: 0.5,
-    });
-
-    closeTooltip = window.setTimeout(function() {
-      map.closePopup();
-    }, 100);
-  }
-
 // -----------------zoom--------------------
-  function zoomToFeature(e) {
-    map.fitBounds(e.target.getBounds());
-  }
 
-  function zoomToMap(e) {
-    map.setView([38.97416, -95.23252], 4)
-  }
 
 // --------time lapse--------------
   function renderTimeLapse() {
@@ -251,7 +125,7 @@ function getLegend(name) {
 
     getLegend(name);
 
-    timeLapse.addTo(map)
+    darkBase.addTo(map)
     torqueLayer.addTo(map);
     createSlider(torqueLayer);
     torqueLayer.play();
@@ -279,7 +153,6 @@ function getLegend(name) {
      $("#torque-pause").on("click", function() {
        torqueLayer.toggle();
        $(this).toggleClass('playing');
-      //  debugger
      });
 
      $('#torque-slider').show()
