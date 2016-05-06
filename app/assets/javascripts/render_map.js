@@ -10,6 +10,7 @@ var variables = [
 ];
 
 var statesCoordinates;
+var previousLegend;
 
 function renderMap(){
 

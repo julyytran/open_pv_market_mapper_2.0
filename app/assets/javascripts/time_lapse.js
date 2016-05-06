@@ -3,7 +3,7 @@ function renderTimeLapse(darkBase, torqueLayer, map) {
   b.setAttribute( "data-name", "time-lapse" );
   var name = b.getAttribute( "data-name" );
 
-  getLegend(name);
+  if (previousLegend) map.legendControl.removeLegend(previousLegend)
 
   darkBase.addTo(map)
   torqueLayer.addTo(map);

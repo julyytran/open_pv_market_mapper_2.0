@@ -2,7 +2,7 @@ function setVariable(name, usLayer, map) {
   var b = document.querySelector("#variables");
   b.setAttribute( "data-name", name );
 
-  getLegend(name);
+  changeLegend(map);
 
   usLayer.eachLayer(function(layer) {
     color = getColor(layer.feature.properties[name], name)

@@ -1,3 +1,10 @@
+function changeLegend(map) {
+  if (previousLegend) map.legendControl.removeLegend(previousLegend)
+  var newLegend = getLegendHTML();
+  map.legendControl.addLegend(newLegend);
+  previousLegend = newLegend;
+}
+
 function getLegendHTML() {
   var b = document.querySelector("#variables");
   var property = b.getAttribute( "data-name" );
