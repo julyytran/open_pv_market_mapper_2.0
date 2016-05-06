@@ -11,25 +11,7 @@ function renderTimeLapse(darkBase, torqueLayer, map) {
   createSlider(torqueLayer);
   torqueLayer.play();
 
-  var hiddenLayer = L.geoJson(statesCoordinates,  {
-       style: getStyle,
-   }).addTo(map);
-
-   function getStyle(feature) {
-       return {
-           weight: 2,
-           opacity: 0.1,
-           color: 'black',
-           fillOpacity: 0,
-       };
-   }
-
-   hiddenLayer.eachLayer(function(layer) {
-     layer.on({
-       click: zoomToFeature,
-       dblclick: zoomToMap
-     });
-   });
+  createZoomLayer()
 }
 
 function createSlider(torqueLayer) {
@@ -59,11 +41,3 @@ function createSlider(torqueLayer) {
    $('#torque-slider').show()
    $('#torque-pause').show()
  };
-
-  function zoomToMap(e) {
-    map.setView([38.97416, -95.23252], 4)
-  }
-
-  function zoomToFeature(e) {
-    map.fitBounds(e.target.getBounds());
-  }
