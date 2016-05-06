@@ -4,7 +4,13 @@ body {
   background-color: blue;
 }
 
-#map { position:absolute; top:0; bottom:0; width:100%; }
+#map {
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:100%;
+  margin-top: 45px;
+}
 
 .leaflet-popup-close-button {
   display: none;
