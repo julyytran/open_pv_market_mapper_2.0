@@ -9,6 +9,7 @@ function joinData(data, usLayer, map) {
 
   for (i = 0; i < data.length; i++) {
     byState[data[i].properties.name] = data[i];
+    debugger
   }
 
   var newFeatures = [];

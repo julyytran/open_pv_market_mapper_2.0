@@ -1,7 +1,7 @@
 require 'csv'
 
 class NRELService
-  include StatesHelper
+  include NRELServiceHelper
 
   attr_reader :connection
 
@@ -19,10 +19,6 @@ class NRELService
 
       State.create(name: state_names["#{abbr}"], abbreviation: abbr, avg_cost_pw: avg_cost_pw,
       total_capacity: total_capacity, total_installs: total_installs)
-
-      state = State.find_by(abbreviation: abbr)
-      Geometry.create(state_id: state.id, shape: state_shapes["#{abbr}"],
-      coordinates: state_coordinates["#{abbr}"] )
     end
   end
 
@@ -49,20 +45,6 @@ class NRELService
       end
 
       write_to_csv(input_data)
-    end
-  end
-
-  private
-
-  def parse(path)
-    JSON.parse(@connection.get(path).body)
-  end
-
-  def write_to_csv(input_data)
-    CSV.open("/lib/assets/installs_data.csv", "a") do |csv|
-      input_data.each do |row|
-        csv << row[0].split(",")
-      end
     end
   end
 end
