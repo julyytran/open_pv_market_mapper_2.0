@@ -1,6 +1,6 @@
 function setVariable(name, usLayer, map) {
   var b = document.querySelector("#variables");
-  b.setAttribute( "data-name", name );
+  b.setAttribute("data-name", name);
 
   changeLegend(map);
 
@@ -28,7 +28,7 @@ function setVariable(name, usLayer, map) {
     var popup = new L.Popup({ autoPan: false });
     var layer = e.target;
     var b = document.querySelector("#variables");
-    var property = b.getAttribute( "data-name" );
+    var property = b.getAttribute("data-name");
 
     if (property == "Average Cost ($/W)") {
       var data = "$" + parseFloat(layer.feature.properties[property]).toFixed(2) + " per watt"
@@ -59,7 +59,7 @@ function setVariable(name, usLayer, map) {
     var layer = e.target;
 
     var b = document.querySelector("#variables");
-    var property = b.getAttribute( "data-name" );
+    var property = b.getAttribute("data-name");
 
     color = getColor(layer.feature.properties[property], property);
 

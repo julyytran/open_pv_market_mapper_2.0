@@ -1,7 +1,7 @@
 function renderTimeLapse(darkBase, torqueLayer, map) {
   var b = document.querySelector("#variables");
-  b.setAttribute( "data-name", "time-lapse" );
-  var name = b.getAttribute( "data-name" );
+  b.setAttribute("data-name", "time-lapse");
+  var name = b.getAttribute("data-name");
 
   if (previousLegend) map.legendControl.removeLegend(previousLegend);
 
@@ -28,7 +28,7 @@ function createSlider(torqueLayer) {
    });
 
    torqueLayer.on('change:time', function(changes) {
-     $("#torque-slider" ).slider({ value: changes.step });
+     $("#torque-slider").slider({ value: changes.step });
      var month_year = changes.time.toString().substr(4).split(' ');
      torqueTime.text(month_year[2]);
    });

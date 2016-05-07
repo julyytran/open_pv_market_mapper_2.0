@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
   renderMap();
 });
 
@@ -51,7 +51,7 @@ function renderMap() {
         map.removeLayer(usLayer);
         renderTimeLapse(darkBase, torqueLayer, map);
         $('#torque-pause').addClass('playing');
-      } else {
+    } else {
         $('#torque-slider').hide();
         $('#torque-pause').hide();
 
@@ -71,9 +71,9 @@ function renderMap() {
       .appendTo($select);
 
   var usLayer = L.mapbox.featureLayer()
-      .loadURL('/api/v1/coordinates')
-      .addTo(map)
-      .on('ready', loadData);
+    .loadURL('/api/v1/coordinates')
+    .addTo(map)
+    .on('ready', loadData);
 
   function loadData() {
     $.getJSON('/api/v1/states')

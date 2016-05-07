@@ -7,7 +7,7 @@ function changeLegend(map) {
 
 function getLegendHTML() {
   var b = document.querySelector("#variables");
-  var property = b.getAttribute( "data-name" );
+  var property = b.getAttribute("data-name");
 
   if (property == "Average Cost ($/W)") {
     var grades = [0, 6.00, 7.00, 8.00, 9.00, 10.00],
@@ -37,25 +37,25 @@ function getLegendHTML() {
 
 function getColor(p, property) {
   if (property == "Total Installs") {
-     return p > 10000 ? '#006d2c' :
-         p > 3000  ? '#31a354' :
-         p > 1000  ? '#74c476' :
-         p > 500  ? '#a1d99b' :
-         p > 100   ? '#c7e9c0' :
-         '#edf8e9';
-  } else if (property == "Average Cost ($/W)") {
+    return p > 10000 ? '#006d2c' :
+      p > 3000  ? '#31a354' :
+      p > 1000  ? '#74c476' :
+      p > 500  ? '#a1d99b' :
+      p > 100   ? '#c7e9c0' :
+      '#edf8e9';
+} else if (property == "Average Cost ($/W)") {
     return p > 10 ? '#006d2c' :
-        p > 9  ? '#31a354' :
-        p > 8  ? '#74c476' :
-        p > 7  ? '#a1d99b' :
-        p > 6   ? '#c7e9c0' :
-        '#edf8e9';
-  } else {
+      p > 9  ? '#31a354' :
+      p > 8  ? '#74c476' :
+      p > 7  ? '#a1d99b' :
+      p > 6   ? '#c7e9c0' :
+      '#edf8e9';
+} else {
     return p > 300 ? '#006d2c' :
-        p > 100  ? '#31a354' :
-        p > 25  ? '#74c476' :
-        p > 5  ? '#a1d99b' :
-        p > 1   ? '#c7e9c0' :
-        '#edf8e9';
+      p > 100  ? '#31a354' :
+      p > 25  ? '#74c476' :
+      p > 5  ? '#a1d99b' :
+      p > 1   ? '#c7e9c0' :
+      '#edf8e9';
   }
 }
