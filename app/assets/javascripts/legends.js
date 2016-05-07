@@ -50,7 +50,7 @@ function getColor(p, property) {
       p > 7  ? '#a1d99b' :
       p > 6   ? '#c7e9c0' :
       '#edf8e9';
-} else {
+} else if (property === "Total Capacity (MW)"){
     return p > 300 ? '#006d2c' :
       p > 100  ? '#31a354' :
       p > 25  ? '#74c476' :

@@ -1,11 +1,11 @@
-function setVariable(name, usLayer, map) {
+function setVariable(property, usLayer, map) {
   var b = document.querySelector("#variables");
-  b.setAttribute("data-name", name);
+  b.setAttribute("data-name", property);
 
   changeLegend(map);
 
   usLayer.eachLayer(function(layer) {
-    color = getColor(layer.feature.properties[name], name);
+    color = getColor(layer.feature.properties[property], property);
 
     layer.setStyle({
       fillColor: color,
