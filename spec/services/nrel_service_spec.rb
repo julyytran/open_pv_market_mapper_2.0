@@ -10,9 +10,9 @@ describe NRELService do
       state = State.find_by(abbreviation: "AK")
 
       expect(state.abbreviation).to eq "AK"
-      expect(state.avg_cost_pw).to eq "6.466"
-      expect(state.total_capacity).to eq "0.1242"
-      expect(state.total_installs).to eq "22"
+      expect(state.avg_cost_pw).to eq 6.466
+      expect(state.total_capacity).to eq 0.1242
+      expect(state.total_installs).to eq 22
     end
   end
 
@@ -24,9 +24,9 @@ describe NRELService do
         state = State.find_by(abbreviation: "AK")
 
         expect(state.abbreviation).to eq "AK"
-        expect(state.avg_cost_pw).to eq "6.466"
-        expect(state.total_capacity).to eq "0.1242"
-        expect(state.total_installs).to eq "22"
+        expect(state.avg_cost_pw).to eq 6.466
+        expect(state.total_capacity).to eq 0.1242
+        expect(state.total_installs).to eq 22
       end
     end
   end

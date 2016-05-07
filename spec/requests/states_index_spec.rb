@@ -15,14 +15,11 @@ RSpec.describe "get states index" do
     state = json_body[0]
 
     expect(state).to eq (
-      {"type"=>"Feature",
-        "id"=>"#{state["id"]}",
-        "properties"=>{
-            "name"=>"Julyarado",
-            "Average Cost ($/W)"=>"100",
-            "Total Installs"=>"300",
-            "Total Capacity (MW)"=>"200"
-        }
+      {"Average Cost ($/W)" => 100.0,
+      "Total Capacity (MW)" => 200.0,
+      "Total Installs" => 300.0,
+      "abbreviation" => "JT",
+      "name" => "Julyarado"}
       )
   end
 end
