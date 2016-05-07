@@ -20,6 +20,3 @@
 
 #Ignore VCR cassettes
 /spec/cassettes
-
-#Ignore New Relic License
-/config/newrelic.yml
