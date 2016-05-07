@@ -9,7 +9,6 @@ var variables = [
   'Total Installs Time Lapse'
 ];
 
-var statesCoordinates;
 var previousLegend;
 
 function renderMap() {
@@ -71,15 +70,14 @@ function renderMap() {
       .appendTo($select);
 
   var usLayer = L.mapbox.featureLayer()
-    .loadURL('/api/v1/coordinates')
+    .setGeoJSON(usCoordinates)
     .addTo(map)
-    .on('ready', loadData);
 
+  loadData();
   function loadData() {
     $.getJSON('/api/v1/states')
       .done(function(data) {
         joinData(data, usLayer, map);
-        statesCoordinates = data;
       });
   }
 }

@@ -1,5 +1,5 @@
 function createZoomLayer() {
-  var zoomLayer = L.geoJson(statesCoordinates, {
+  var zoomLayer = L.geoJson(usCoordinates, {
     style: getStyle,
   }).addTo(map);
 

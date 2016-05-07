@@ -4,7 +4,7 @@ $('#search').keypress(function(e) {
     var input = $('#search').val();
     var query = input[0].toUpperCase() + input.slice(1);
 
-    var hiddenLayer = L.geoJson(statesCoordinates, {
+    var hiddenLayer = L.geoJson(usCoordinates, {
       style: getStyle,
      }).addTo(map);
 
