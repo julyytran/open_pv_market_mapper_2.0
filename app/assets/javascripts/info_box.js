@@ -1,7 +1,7 @@
-$('#about').on('click', function(){
-  $('#info').toggle()
+$('#about').on('click', function () {
+  $('#info').toggle();
 })
 
-$('#info').on('click', function(){
-  $(this).toggle()
+$('#info').on('click', function () {
+  $(this).toggle();
 })
