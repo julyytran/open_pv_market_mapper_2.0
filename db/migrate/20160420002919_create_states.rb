@@ -3,9 +3,9 @@ class CreateStates < ActiveRecord::Migration
     create_table :states do |t|
       t.string :name
       t.string :abbreviation
-      t.string :avg_cost_pw
-      t.string :total_capacity
-      t.string :total_installs
+      t.float :avg_cost_pw
+      t.float :total_capacity
+      t.float :total_installs
 
       t.timestamps null: false
     end

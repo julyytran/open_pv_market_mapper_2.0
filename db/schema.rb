@@ -11,25 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420203336) do
+ActiveRecord::Schema.define(version: 20160420002919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "geometries", force: :cascade do |t|
-    t.integer  "state_id"
-    t.string   "shape"
-    t.string   "coordinates"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "states", force: :cascade do |t|
     t.string   "name"
     t.string   "abbreviation"
-    t.string   "avg_cost_pw"
-    t.string   "total_capacity"
-    t.string   "total_installs"
+    t.float    "avg_cost_pw"
+    t.float    "total_capacity"
+    t.float    "total_installs"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
