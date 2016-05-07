@@ -3,15 +3,15 @@ function renderTimeLapse(darkBase, torqueLayer, map) {
   b.setAttribute( "data-name", "time-lapse" );
   var name = b.getAttribute( "data-name" );
 
-  if (previousLegend) map.legendControl.removeLegend(previousLegend)
+  if (previousLegend) map.legendControl.removeLegend(previousLegend);
 
-  darkBase.addTo(map)
+  darkBase.addTo(map);
   torqueLayer.addTo(map);
 
   createSlider(torqueLayer);
   torqueLayer.play();
 
-  createZoomLayer()
+  createZoomLayer();
 }
 
 function createSlider(torqueLayer) {
@@ -38,6 +38,6 @@ function createSlider(torqueLayer) {
      $(this).toggleClass('playing');
    });
 
-   $('#torque-slider').show()
-   $('#torque-pause').show()
- };
+   $('#torque-slider').show();
+   $('#torque-pause').show();
+ }

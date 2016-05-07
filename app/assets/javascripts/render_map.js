@@ -12,9 +12,9 @@ var variables = [
 var statesCoordinates;
 var previousLegend;
 
-function renderMap(){
+function renderMap() {
 
-  var darkBase = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj')
+  var darkBase = L.mapbox.styleLayer('mapbox://styles/julyytran/cinji91jy001hadnjt6mazqnj');
 
   var style =
     'Map {' +
@@ -48,18 +48,18 @@ function renderMap(){
     .appendTo($('#variables'))
     .on('change', function() {
       if ($(this).val() == "Total Installs Time Lapse") {
-        map.removeLayer(usLayer)
+        map.removeLayer(usLayer);
         renderTimeLapse(darkBase, torqueLayer, map);
         $('#torque-pause').addClass('playing');
       } else {
-        $('#torque-slider').hide()
-        $('#torque-pause').hide()
+        $('#torque-slider').hide();
+        $('#torque-pause').hide();
 
         torqueLayer.stop();
         map.removeLayer(darkBase);
         map.removeLayer(torqueLayer);
 
-        map.addLayer(usLayer)
+        map.addLayer(usLayer);
         setVariable($(this).val(), usLayer, map);
       }
     });

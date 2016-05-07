@@ -5,7 +5,7 @@ function setVariable(name, usLayer, map) {
   changeLegend(map);
 
   usLayer.eachLayer(function(layer) {
-    color = getColor(layer.feature.properties[name], name)
+    color = getColor(layer.feature.properties[name], name);
 
     layer.setStyle({
       fillColor: color,
@@ -13,6 +13,7 @@ function setVariable(name, usLayer, map) {
       weight: 0.5,
       opacity: 0.5,
     });
+
     layer.on({
       mousemove: mousemove,
       mouseout: mouseout,
@@ -60,7 +61,7 @@ function setVariable(name, usLayer, map) {
     var b = document.querySelector("#variables");
     var property = b.getAttribute( "data-name" );
 
-    color = getColor(layer.feature.properties[property], property)
+    color = getColor(layer.feature.properties[property], property);
 
     layer.setStyle({
       fillColor: color,
@@ -79,6 +80,6 @@ function setVariable(name, usLayer, map) {
   }
 
   function zoomToMap(e) {
-    map.setView([38.97416, -95.23252], 4)
+    map.setView([38.97416, -95.23252], 4);
   }
 }

@@ -1,6 +1,6 @@
 function joinData(data, usLayer, map) {
-  var usGeoJSON = usLayer.getGeoJSON(),
-      byState = {};
+  var usGeoJSON = usLayer.getGeoJSON();
+  var byState = {};
 
   for (var i = 0; i < usGeoJSON.features.length; i++) {
     byState[usGeoJSON.features[i].properties.name] =
@@ -12,6 +12,7 @@ function joinData(data, usLayer, map) {
   }
 
   var newFeatures = [];
+
   for (i in byState) {
     newFeatures.push(byState[i]);
   }

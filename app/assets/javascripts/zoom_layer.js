@@ -20,7 +20,7 @@ function createZoomLayer(){
    });
 
   function zoomToMap(e) {
-    map.setView([38.97416, -95.23252], 4)
+    map.setView([38.97416, -95.23252], 4);
   }
 
   function zoomToFeature(e) {

@@ -1,5 +1,5 @@
 function changeLegend(map) {
-  if (previousLegend) map.legendControl.removeLegend(previousLegend)
+  if (previousLegend) map.legendControl.removeLegend(previousLegend);
   var newLegend = getLegendHTML();
   map.legendControl.addLegend(newLegend);
   previousLegend = newLegend;
