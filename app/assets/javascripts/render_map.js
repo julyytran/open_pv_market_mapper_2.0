@@ -43,6 +43,11 @@ function renderMap() {
     tiler_port: 443
   });
 
+  $("#torque-pause").on("click", function() {
+    torqueLayer.toggle();
+    $(this).toggleClass('playing');
+  });
+
   var $select = $('<select></select>')
     .appendTo($('#variables'))
     .on('change', function() {
