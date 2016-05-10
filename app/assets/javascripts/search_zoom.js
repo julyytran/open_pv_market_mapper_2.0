@@ -1,7 +1,7 @@
-$('#search').keypress(function(e) {
+$('#typeahead').keypress(function(e) {
   if (e.keyCode == 13) {
     e.preventDefault();
-    var input = $('#search').val();
+    var input = $('#typeahead').val();
     var query = input[0].toUpperCase() + input.slice(1);
 
     var hiddenLayer = L.geoJson(usCoordinates, {
@@ -20,10 +20,14 @@ $('#search').keypress(function(e) {
     hiddenLayer.eachLayer(function(layer) {
       if (layer.feature.properties.name == query) {
         map.fitBounds(layer.getBounds());
-        $('#search').val('');
+        $('#typeahead').val('');
       };
     });
 
     map.removeLayer(hiddenLayer);
   };
 });
+
+$('#map').click(function () {
+  $('#typeahead').val('')
+})
