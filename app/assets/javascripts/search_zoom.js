@@ -27,3 +27,7 @@ $('#typeahead').keypress(function(e) {
     map.removeLayer(hiddenLayer);
   };
 });
+
+$('#map').click(function () {
+  $('#typeahead').val('')
+})

@@ -77,6 +77,7 @@ function setVariable(property, usLayer, map) {
 
   function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
+    $('#typeahead').val('');
   }
 
   function zoomToMap(e) {
