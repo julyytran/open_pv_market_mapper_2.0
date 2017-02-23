@@ -11,6 +11,7 @@
 
 <%= yield %>
 
+<!--  Include JS libraries and stylesheets for them  -->
 <%= javascript_include_tag 'application' %>
 <script src='//api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
 <link href='//api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
@@ -19,8 +20,11 @@
 <link href='//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
 <script type='text/javascript' src='//code.jquery.com/ui/1.10.3/jquery-ui.js'></script>
 <script type='text/javascript'>
+//   Set a global access token. This one is the default public token, so it's cool to commit it. 
   L.mapbox.accessToken = 'pk.eyJ1IjoianVseXl0cmFuIiwiYSI6ImNpbXMzbmtrYzAxYzh3Ymx1aGU5bWZuMzAifQ.DjfzN_9iu_oXX2TnI_-r4g';
 
+//   Creates a global map variable so you can access in any JS files. The 'map' is the HTML id of the element you want to attach the literal map to.
+// .setView(coordinates, zoom level) sets the inital view. These coordinates are for the U.S.
   var map = L.mapbox.map('map').setView([38.97416, -95.23252], 4);
 </script>
 
