@@ -10,8 +10,6 @@ You can currently view by state 1 of 3 summary data metrics calculated using all
   - Total Installs: number of total solar installations
   - Total Installs Time Lapse: the number of installations as they happen each year
 
-More visualizations over time and by county are coming soon!
-
 # Development
 This app uses Ruby on Rails as a web app framework, the JavaScript libraries [Mapbox](https://www.mapbox.com/), [Leaflet](http://leafletjs.com/), and [CartoDB](https://cartodb.com/) to create the maps, and [jQuery](https://jquery.com/), [typeahead](https://twitter.github.io/typeahead.js/), and [Bootstrap](http://getbootstrap.com/) for UI. Data are collected from the [NREL Open PV API](https://developer.nrel.gov/docs/solar/openpv/) and are joined with coordinate data to be served as an internal API of [GeoJSON](http://geojson.org/).
 
