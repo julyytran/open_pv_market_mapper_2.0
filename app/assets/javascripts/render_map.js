@@ -3,10 +3,10 @@ $(document).ready(function () {
 });
 
 var variables = [
-  'Total Installs Time Lapse',
-  'Total Installs',
   'Average Cost ($/W)',
-  'Total Capacity (MW)'
+  'Total Capacity (MW)',
+  'Total Installs',
+  'Total Installs Time Lapse',
 ];
 
 var previousLegend;
